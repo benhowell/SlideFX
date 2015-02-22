@@ -1,4 +1,4 @@
-PsychoLangDiminutives
+SlideFX
 ===========
 Initial commit. Under development. Not working.
 
