@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane id="gridPane" fx:id="gridPane" gridLinesVisible="false" hgap="0.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" vgap="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox alignment="CENTER_RIGHT" fillHeight="false" pickOnBounds="true" prefHeight="100.0" prefWidth="800.0" visible="true" GridPane.rowIndex="4">
+            <children>
+                <Button fx:id="prevButton" mnemonicParsing="false" text="&lt;- Back" />
+                <Separator fx:id="separator" prefWidth="5.0" />
+                <Button fx:id="nextButton" mnemonicParsing="false" text="Next -&gt;" />
+            </children>
+        </HBox>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" maxWidth="800.0" minWidth="800.0" prefWidth="800.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="339.0" minHeight="29.0" prefHeight="118.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="414.0" minHeight="10.0" prefHeight="332.0" valignment="TOP" vgrow="NEVER" />
+        <RowConstraints maxHeight="134.0" minHeight="55.0" prefHeight="55.0" valignment="TOP" vgrow="NEVER" />
+        <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="62.0" valignment="CENTER" vgrow="ALWAYS" />
+        <RowConstraints maxHeight="37.0" minHeight="29.0" prefHeight="33.0" vgrow="NEVER" />
+    </rowConstraints>
+</GridPane>
