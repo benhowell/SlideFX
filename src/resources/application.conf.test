@@ -1,0 +1,69 @@
+experiment {
+  title = "Australian Diminutives"
+  randomiseCategoryPresentation = true
+  intro = [
+    {
+      id = "intro-3"
+      label = "Making words sound Australian"
+      text =
+"""Let's go through some examples first"""
+        }
+  ]
+
+  examples = [
+    {
+      id = "example-1"
+      type = "example"
+      image = "Brisbane_CBDandSB.png"
+      text = "My aunty lives in ${name}, but for short, she calls it…"
+      name = "Brisbane"
+      example = "Brisso"
+    }
+  ]
+  interlude = [
+    {
+      id = "interlude-1"
+      label = "Ok, now it's your turn!"
+      text =
+        """Hit the 'next' button to start"""
+    }
+  ]
+  outro = [
+    {
+      id = "outro-1"
+      label = "Thank you for participating in this exercise :)"
+      text =
+        """Hit the 'next' button to save your exercise answers and close the application. Don't forget to submit the file! Seeya!"""
+    }
+  ]
+  blocks = [
+    {
+      category = "thing"
+      names = [
+        "glistow"
+        "pennel"
+        "prindle"
+        "clafton"
+        "morite"
+        "tordon"
+        "hampent"
+        "swinnet"
+      ]
+      trials = [
+        {
+          id = "trial-1"
+          type = "bad"
+          image = "image1.png"
+          text = "Look at that dirty old ${name}! Some people also call it a …"
+          name = ""
+        }
+      ]
+    }
+  ]
+}
+
+ 
+ 
+
+
+
