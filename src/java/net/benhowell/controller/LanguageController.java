@@ -87,7 +87,7 @@ public class LanguageController extends ControllerLoader implements Initializabl
 
   public void load() {
     display.fxRun( () -> {
-      display.loadScreen("detail-1", node);
+      display.loadScreen(node);
       nextButton.requestFocus();
     } );
   }

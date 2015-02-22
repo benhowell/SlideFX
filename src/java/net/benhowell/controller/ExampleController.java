@@ -84,7 +84,7 @@ public class ExampleController implements Initializable {
       textField.clear();
       label.setText(txt);
       imageView.setImage(img);
-      display.loadScreen(trial.get("id"), node);
+      display.loadScreen(node);
       textField.setText(example);
       textField.setEditable(false);
       nextButton.requestFocus();

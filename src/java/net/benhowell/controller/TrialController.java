@@ -86,7 +86,7 @@ public class TrialController implements Initializable {
       textField.clear();
       label.setText(txt);
       imageView.setImage(img);
-      display.loadScreen(trial.get("id"), node);
+      display.loadScreen(node);
     });
   }
 

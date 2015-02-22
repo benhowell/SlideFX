@@ -36,26 +36,13 @@ import java.util.HashMap;
  */
 public class Display extends StackPane{
 
-  HashMap<String, Node> screens = new HashMap<>();
-
-  public void loadScreen(String id, Node screen) {
-    screens.put(id, screen);
+  public void loadScreen(Node screen) {
     if (!getChildren().isEmpty()){
       getChildren().remove(0);
       getChildren().add(0, screen);
     }
     else {
       getChildren().add(screen);
-    }
-  }
-
-  public Boolean unloadScreen(String name){
-    if (screens.remove(name) == null) {
-      System.out.println("Screen didn't exist");
-      return false;
-    }
-    else {
-      return true;
     }
   }
 

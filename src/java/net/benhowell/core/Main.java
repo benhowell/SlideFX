@@ -29,6 +29,7 @@ import com.typesafe.config.Config;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
@@ -41,6 +42,7 @@ import java.time.Instant;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -58,17 +60,23 @@ public class Main extends Application{
   Store store = new Store();
 
   // init controllers
-  IntroController introController = new IntroController(loader, "IntroGridPane.fxml", display);
+  HeadingWithTextController headingWithTextController = new HeadingWithTextController(loader, "Screen.fxml", display);
+
+
   ExampleController exampleController = new ExampleController(loader, "TrialGridPane.fxml", display);
-  IntroController interludeController = new IntroController(loader, "IntroGridPane.fxml", display);
+  HeadingWithTextController interludeController = new HeadingWithTextController(loader, "Screen.fxml", display);
   TrialController trialController = new TrialController(loader, "TrialGridPane.fxml", display);
   DetailController detailController = new DetailController(loader, "PersonalDetailGridPane.fxml", display);
   LanguageController languageController = new LanguageController(loader, "LanguageGridPane.fxml", display);
-  IntroController outroController = new IntroController(loader, "IntroGridPane.fxml", display);
+  HeadingWithTextController outroController = new HeadingWithTextController(loader, "Screen.fxml", display);
 
   ArrayList<Map<String, String>> intro;
   ArrayList<Map<String, String>> interlude;
   ArrayList<Map<String, String>> outro;
+
+
+  LinkedList<ScreenController> screens = new LinkedList<>();
+
 
 
   public static void main(String[] args) {
@@ -96,24 +104,27 @@ public class Main extends Application{
     outro = Intro.load(config, "experiment.outro");
     System.out.println("outro: " + outro);
 
-    introController.prevButton.setDisable(true);
-    introController.prevButton.setOnAction(e -> {
+
+    //screens.add(headingWithTextController);
+
+    headingWithTextController.prevButton.setDisable(true);
+    headingWithTextController.prevButton.setOnAction(e -> {
       if (currentItem > 0) {
         currentItem--;
         if(currentItem == 0)
-          introController.prevButton.setDisable(true);
-        introController.update(intro.get(currentItem));
+          headingWithTextController.prevButton.setDisable(true);
+        headingWithTextController.update(intro.get(currentItem));
       }
       else {
         System.out.println("no prev!");
       }
     });
 
-    introController.nextButton.setOnAction(e -> {
-      introController.prevButton.setDisable(false);
+    headingWithTextController.nextButton.setOnAction(e -> {
+      headingWithTextController.prevButton.setDisable(false);
       if (currentItem < intro.size() - 1) {
         currentItem++;
-        introController.update(intro.get(currentItem));
+        headingWithTextController.update(intro.get(currentItem));
       }
       else {
         currentItem = 0;
@@ -129,7 +140,8 @@ public class Main extends Application{
       }
       else {
         currentItem = intro.size() -1;
-        introController.update(intro.get(currentItem));
+        //introController.update(intro.get(currentItem));
+        headingWithTextController.update(intro.get(currentItem));
       }
     });
 
@@ -229,7 +241,7 @@ public class Main extends Application{
 
 
   public void start(Stage primaryStage) {
-    introController.load(intro.get(currentItem));
+    headingWithTextController.load(intro.get(currentItem));
     init(primaryStage, Configuration.getConfigString(config, "experiment.title"));
     primaryStage.show();
   }

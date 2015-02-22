@@ -85,7 +85,7 @@ public class DetailController implements Initializable{
 
   public void load() {
     display.fxRun( () -> {
-      display.loadScreen("detail-1", node);
+      display.loadScreen(node);
       nextButton.requestFocus();
     } );
   }
