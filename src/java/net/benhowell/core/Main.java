@@ -63,9 +63,13 @@ public class Main extends Application{
   HeadingWithTextController headingWithTextController = new HeadingWithTextController(loader, "Screen.fxml", display);
 
 
+
   ExampleController exampleController = new ExampleController(loader, "TrialGridPane.fxml", display);
   HeadingWithTextController interludeController = new HeadingWithTextController(loader, "Screen.fxml", display);
-  TrialController trialController = new TrialController(loader, "TrialGridPane.fxml", display);
+
+  //TrialController trialController = new TrialController(loader, "TrialGridPane.fxml", display);
+  PictureWithTextAndTextBoxController pictureWithTextAndTextBoxController = new PictureWithTextAndTextBoxController(loader, "Screen.fxml", display);
+
   DetailController detailController = new DetailController(loader, "PersonalDetailGridPane.fxml", display);
   LanguageController languageController = new LanguageController(loader, "LanguageGridPane.fxml", display);
   HeadingWithTextController outroController = new HeadingWithTextController(loader, "Screen.fxml", display);
@@ -174,11 +178,33 @@ public class Main extends Application{
       }
       else {
         currentItem = 0;
-        trialController.update(trials.get(currentItem));
+        //trialController.update(trials.get(currentItem));
+        pictureWithTextAndTextBoxController.update(trials.get(currentItem));
       }
     });
 
-    trialController.prevButton.setOnAction(e -> {
+    pictureWithTextAndTextBoxController.prevButton.setOnAction(e -> {
+      if (currentItem > 0) {
+        currentItem--;
+        pictureWithTextAndTextBoxController.update(trials.get(currentItem));
+      } else {
+        currentItem = interlude.size() -1;
+        interludeController.update(interlude.get(currentItem));
+      }
+    });
+
+    pictureWithTextAndTextBoxController.nextButton.setOnAction(e -> {
+      if (currentItem < trials.size() - 1) {
+        store.addTrial(trials.get(currentItem), pictureWithTextAndTextBoxController.getResult());
+        currentItem++;
+        pictureWithTextAndTextBoxController.update(trials.get(currentItem));
+      } else {
+        currentItem = 0;
+        detailController.load();
+      }
+    });
+
+    /*trialController.prevButton.setOnAction(e -> {
       if (currentItem > 0) {
         currentItem--;
         trialController.update(trials.get(currentItem));
@@ -197,11 +223,12 @@ public class Main extends Application{
         currentItem = 0;
         detailController.load();
       }
-    });
+    });*/
 
     detailController.prevButton.setOnAction(e -> {
       currentItem = trials.size() - 1;
-      trialController.update(trials.get(currentItem));
+      //trialController.update(trials.get(currentItem));
+      pictureWithTextAndTextBoxController.update(trials.get(currentItem));
     });
     detailController.nextButton.setOnAction(e -> {
       store.addDetail(detailController.getResult());
