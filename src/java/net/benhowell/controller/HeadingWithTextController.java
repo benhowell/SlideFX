@@ -24,21 +24,20 @@
 
 package net.benhowell.controller;
 
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import net.benhowell.core.Display;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -48,8 +47,8 @@ import java.util.ResourceBundle;
  */
 public class HeadingWithTextController extends ScreenController implements Initializable {
 
-  @FXML private TextArea bodyTextArea;
-  @FXML private Label headingLabel;
+  private TextArea bodyTextArea;
+  private Label headingLabel;
 
 
   public HeadingWithTextController(ControllerLoader loader, String resource, Display display) {
@@ -83,6 +82,52 @@ public class HeadingWithTextController extends ScreenController implements Initi
     textFlow.getStyleClass().add("paragraph");
     GridPane.setRowIndex(textFlow, 1);
     gridPane.getChildren().add(textFlow);
+
+    ColumnConstraints columnConstraints = new ColumnConstraints();
+    columnConstraints.setHgrow(Priority.NEVER);
+    columnConstraints.setMaxWidth(800.0);
+    columnConstraints.setMinWidth(800.0);
+    columnConstraints.setPrefWidth(800.0);
+    gridPane.getColumnConstraints().addAll(columnConstraints);
+
+    RowConstraints r1 = new RowConstraints();
+    RowConstraints r2 = new RowConstraints();
+    RowConstraints r3 = new RowConstraints();
+    RowConstraints r4 = new RowConstraints();
+    RowConstraints r5 = new RowConstraints();
+    r1.setMaxHeight(339.0);
+    r1.setMinHeight(29.0);
+    r1.setPrefHeight(118.0);
+    r1.setVgrow(Priority.NEVER);
+
+    r2.setMaxHeight(414.0);
+    r2.setMinHeight(10.0);
+    r2.setPrefHeight(332.0);
+    r2.setValignment(VPos.TOP);
+    r2.setVgrow(Priority.NEVER);
+
+    r3.setMaxHeight(134.0);
+    r3.setMinHeight(55.0);
+    r3.setPrefHeight(55.0);
+    r3.setValignment(VPos.TOP);
+    r3.setVgrow(Priority.NEVER);
+
+    r4.setMaxHeight(66.0);
+    r4.setMinHeight(10.0);
+    r4.setPrefHeight(62.0);
+    r4.setValignment(VPos.CENTER);
+    r4.setVgrow(Priority.ALWAYS);
+
+    r5.setMaxHeight(37.0);
+    r5.setMinHeight(29.0);
+    r5.setPrefHeight(33.0);
+    r5.setVgrow(Priority.NEVER);
+
+    gridPane.getRowConstraints().addAll(r1, r2, r3, r4, r5);
+
+
+
+
   }
 
 
