@@ -39,12 +39,12 @@ import java.util.ResourceBundle;
 /**
  * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
  */
-public class ScreenController implements Initializable {
+public class ScreenController {
 
 
-  @FXML protected GridPane gridPane  = null;
-  @FXML public Button nextButton = null;
-  @FXML public Button prevButton = null;
+  @FXML protected GridPane gridPane;
+  @FXML public Button nextButton;
+  @FXML public Button prevButton;
 
   private Display display;
   private Node node;
@@ -52,7 +52,7 @@ public class ScreenController implements Initializable {
   public ScreenController(ControllerLoader loader, String resource, Display display) {
     this.display = display;
     try {
-      node = loader.controllerLoader(this, resource);
+      this.node = loader.controllerLoader(this, resource);
     }
     catch (IOException e) {
       System.out.println("Controller loader failed to load view: " + e);
@@ -66,9 +66,9 @@ public class ScreenController implements Initializable {
     Platform.runLater(() -> load());
   }
 
-  public void initialize(URL url, ResourceBundle rb) {
+  /*public void initialize(URL url, ResourceBundle rb) {
     System.out.println(this.getClass().getSimpleName() + ".initialise");
-  }
+  }*/
 
 
 }
