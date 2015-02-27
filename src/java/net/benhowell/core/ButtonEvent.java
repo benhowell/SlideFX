@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 Ben Howell
+ * Copyright (c) 2015 Ben Howell
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,44 +22,16 @@
  * SOFTWARE.
  */
 
-
 package net.benhowell.core;
 
-import com.typesafe.config.Config;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.util.EventObject;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
+ * Created by Ben Howell [ben@benhowell.net] on 27-Feb-2015.
  */
-public class Intro {
-
-
-  public static ArrayList<Map<String,String>> load(Config config, String item){
-    ArrayList<Map<String,String>> es = new ArrayList<>();
-    List s = Configuration.getConfigList(config, item);
-    for(Object c: s){
-      es.add(create((Config)c));
-    }
-    return es;
-  }
-
-  public static Map<String,String> create(Config config){
-    HashMap<String, String> m = new HashMap<>();
-    m.put("id", config.getString("id"));
-    m.put("label", config.getString("label"));
-    m.put("text", config.getString("text"));
-    return m;
+public class ButtonEvent  extends EventObject {
+  private static final long serialVersionUID = 1L;
+  public ButtonEvent(Object source) {
+    super(source);
   }
 }
-
-
-
-
-
-
-
