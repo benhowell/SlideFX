@@ -26,7 +26,6 @@
 package net.benhowell.core;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
@@ -39,7 +38,6 @@ import net.benhowell.controller.*;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.UncheckedIOException;
 import java.time.Instant;
 import java.io.IOException;
 import java.util.*;
@@ -67,7 +65,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
 
   DoublyLinkedList<Card> cards;
-  DLLNode<Card> cardNode;
+  DLLNode<Card> card;
 
 
 
@@ -122,19 +120,17 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
   @Override
   public void handlePrevButtonEvent(ButtonEvent event) {
-    if (cards.hasPrevious(cardNode)) {
-      cardNode = cards.getPrevious(cardNode);
-      System.out.println("hasPrev");
-      cardNode.getElement().update();
+    if (cards.hasPrevious(card)) {
+      card = cards.getPrevious(card);
+      card.getElement().update();
     }
   }
 
   @Override
   public void handleNextButtonEvent(ButtonEvent event) {
-    if (cards.hasNext(cardNode)) {
-      cardNode = cards.getNext(cardNode);
-      System.out.println("hasNext");
-      cardNode.getElement().update();
+    if (cards.hasNext(card)) {
+      card = cards.getNext(card);
+      card.getElement().update();
     }
   }
 
@@ -167,7 +163,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     //cards.addAll(load(config, ?, "experiment.outro"));
 
     // get first card node
-    cardNode = cards.getFirst();
+    card = cards.getFirst();
 
 
 
@@ -319,7 +315,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
 
   public void start(Stage primaryStage) {
-    cardNode.getElement().load();
+    card.getElement().load();
     init(primaryStage, config.getString("experiment.title"));
     primaryStage.show();
   }
