@@ -24,6 +24,7 @@
 
 package net.benhowell.controller;
 
+import com.typesafe.config.Config;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -125,24 +126,24 @@ public class HeadingWithTextController extends ScreenController implements Initi
 
     gridPane.getRowConstraints().addAll(r1, r2, r3, r4, r5);
 
+    this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
 
-
-
+    this.nextButton.setOnAction(e -> triggerNextButtonEvent());
   }
 
 
-  public void load(Map<String, String> intro) {
+  public void load(Config items) {
     System.out.println(headingLabel.getText());
-    headingLabel.setText(intro.get("label"));
-    bodyTextArea.setText(intro.get("text"));
+    headingLabel.setText(items.getString("label"));
+    bodyTextArea.setText(items.getString("text"));
     super.load();
   }
 
 
-  public void update(Map<String, String> intro) {
+  public void update(Config items) {
     super.update(() -> {
-      headingLabel.setText(intro.get("label"));
-      bodyTextArea.setText(intro.get("text"));
+      headingLabel.setText(items.getString("label"));
+      bodyTextArea.setText(items.getString("text"));
     });
     super.update(() -> nextButton.requestFocus());
   }
@@ -152,6 +153,3 @@ public class HeadingWithTextController extends ScreenController implements Initi
     System.out.println(this.getClass().getSimpleName() + ".initialise");
   }
 }
-
-
-
