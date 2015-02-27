@@ -130,12 +130,3 @@ public class DetailController implements Initializable{
 
 
 }
-
-
-
-
-
-
-
-
-
