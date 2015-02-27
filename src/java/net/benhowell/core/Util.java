@@ -24,6 +24,9 @@
 
 package net.benhowell.core;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValue;
+
 import java.util.*;
 
 /**
@@ -48,18 +51,11 @@ public class Util {
     return l;
   }
 
-  public static <T> List<List<T>> zip(List... lists) {
-    List<List<T>> zipped = new ArrayList<List<T>>();
-    for (List<T> list : lists) {
-      for (int i = 0, listSize = list.size(); i < listSize; i++) {
-        List<T> list2;
-        if (i >= zipped.size())
-          zipped.add(list2 = new ArrayList<T>());
-        else
-          list2 = zipped.get(i);
-        list2.add(list.get(i));
-      }
-    }
-    return zipped;
+  public static Map<String,String> ConfigToMap(Config config){
+    Map<String,String> map = new HashMap<>();
+    config.entrySet()
+      .stream()
+      .forEach(e -> map.put(e.getKey(), e.getValue().unwrapped().toString()));
+    return map;
   }
 }
