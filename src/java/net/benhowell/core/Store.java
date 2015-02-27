@@ -24,6 +24,10 @@
 
 package net.benhowell.core;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValue;
+import com.typesafe.config.ConfigValueFactory;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,26 +39,33 @@ import java.util.Map;
  */
 public class Store {
 
-  HashMap<String, Map<String, String>> results = new HashMap<>();
+  HashMap<String, Config> results = new HashMap<>();
   Map<String, String> detail;
   Map<String, String> language;
 
 
-  public void addTrial(Map<String, String> trial, String result){
-    String txt = trial.get("text").replace("${name}", trial.get("name"));
+
+  public Config getTrial(String id){
+    return results.get("id");
+  }
+
+  public void addTrial(Config trial, String result){
+    Config newConfig = trial.withValue("result",  ConfigValueFactory.fromAnyRef(result));
+
+    String txt = newConfig.getString("text").replace("${name}", newConfig.getString("name"));
     System.out.println("\nStoring result");
     System.out.println("-------------------------");
-    System.out.println(" id: " + trial.get("id"));
-    System.out.println(" category: " + trial.get("category"));
-    System.out.println(" type: " + trial.get("type"));
-    System.out.println(" image: " + trial.get("imageName"));
-    System.out.println(" text: " + trial.get("text"));
-    System.out.println(" name: " + trial.get("name"));
+    System.out.println(" id: " + newConfig.getString("id"));
+    System.out.println(" category: " + newConfig.getString("category"));
+    System.out.println(" type: " + newConfig.getString("type"));
+    System.out.println(" image: " + newConfig.getString("image"));
+    System.out.println(" text: " + newConfig.getString("text"));
+    System.out.println(" name: " + newConfig.getString("name"));
     System.out.println(" presented text: " + txt);
     System.out.println(" result: " + result);
     System.out.println("-------------------------\n");
-    trial.put("result", result);
-    results.put(trial.get("id"), trial);
+
+    results.put(newConfig.getString("id"), newConfig);
 
   }
 
