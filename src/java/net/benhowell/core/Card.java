@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 Ben Howell
+ * Copyright (c) 2015 Ben Howell
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,35 +22,32 @@
  * SOFTWARE.
  */
 
-
 package net.benhowell.core;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-
-import java.util.List;
+import net.benhowell.controller.HeadingWithTextController;
+import net.benhowell.controller.ScreenController;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
+ * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
  */
-public class Configuration {
-  public static Config loadConfig() {
-    return ConfigFactory.load();
+public class Card {
+
+  private ScreenController controller;
+  private Config items;
+
+  public Card(Config c, ScreenController sc){
+    controller = sc;
+    items = c;
   }
 
-  public static String getConfigString(Config config, String item){
-    return config.getString(item);
+
+  public void load(){
+    controller.load(items);
   }
 
-  public static List getConfigList(Config config, String item){
-    return config.getConfigList(item);
-  }
 
-  public static List getStringList(Config config, String item){
-    return config.getStringList(item);
-  }
-
-  public static Boolean getConfigBoolean(Config config, String item){
-    return config.getBoolean(item);
+  public void update(){
+    controller.update(items);
   }
 }
