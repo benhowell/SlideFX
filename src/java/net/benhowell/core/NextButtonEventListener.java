@@ -25,11 +25,8 @@
 package net.benhowell.core;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net] on 27-Feb-2015.
  */
-public class Screen {
-
-
-
-
+public interface NextButtonEventListener {
+  void handleNextButtonEvent(ButtonEvent event);
 }
