@@ -29,8 +29,6 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
-import java.util.HashMap;
-
 /**
  * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
  */
@@ -46,7 +44,7 @@ public class Display extends StackPane{
     }
   }
 
-  //final Runnable function
+
   public void fxRun(final Runnable f){
     Platform.runLater(f);
   }
