@@ -46,9 +46,6 @@ import java.util.*;
  * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
  */
 
-
-
-
 public class LanguageController extends ControllerLoader implements Initializable {
 
   @FXML private GridPane languageGridPane = null;
@@ -79,9 +76,7 @@ public class LanguageController extends ControllerLoader implements Initializabl
 
   public Map<String, String> getResult(){
     Map<String, String> m = new HashMap<>();
-    for(LangControllerRow r : data){
-      m.put(r.getLanguage(), r.getFluency());
-    }
+    data.stream().forEach(d -> m.put(d.getLanguage(), d.getFluency()));
     return m;
   }
 
@@ -111,12 +106,12 @@ public class LanguageController extends ControllerLoader implements Initializabl
     fluencyComboBox.setValue("Basic");
 
     languageColumn.setCellValueFactory(
-        new PropertyValueFactory<>("language")
+      new PropertyValueFactory<>("language")
     );
     languageColumn.setEditable(true);
 
     fluencyColumn.setCellValueFactory(
-        new PropertyValueFactory<>("fluency")
+      new PropertyValueFactory<>("fluency")
     );
     fluencyColumn.setEditable(true);
 
