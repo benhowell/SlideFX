@@ -26,10 +26,11 @@
 package net.benhowell.core;
 
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigFactory;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
@@ -38,48 +39,35 @@ import net.benhowell.controller.*;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.UncheckedIOException;
 import java.time.Instant;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
  */
-public class Main extends Application{
+public class Main extends Application implements PrevButtonEventListener, NextButtonEventListener {
 
   Stage stage = null;
   Config config;
-
-  int currentItem = 0;
-
   Display display = new Display();
   ControllerLoader loader = new ControllerLoader();
   Store store = new Store();
 
   // init controllers
   HeadingWithTextController headingWithTextController = new HeadingWithTextController(loader, "Screen.fxml", display);
-
-
-
-  ExampleController exampleController = new ExampleController(loader, "TrialGridPane.fxml", display);
-  HeadingWithTextController interludeController = new HeadingWithTextController(loader, "Screen.fxml", display);
-
-  //TrialController trialController = new TrialController(loader, "TrialGridPane.fxml", display);
-  PictureWithTextAndTextBoxController pictureWithTextAndTextBoxController = new PictureWithTextAndTextBoxController(loader, "Screen.fxml", display);
-
+  PictureWithTextAndTextBoxController pictureWithTextAndTextBoxController = new PictureWithTextAndTextBoxController(loader, "Screen.fxml", display, store);
+  /*
   DetailController detailController = new DetailController(loader, "PersonalDetailGridPane.fxml", display);
   LanguageController languageController = new LanguageController(loader, "LanguageGridPane.fxml", display);
+
   HeadingWithTextController outroController = new HeadingWithTextController(loader, "Screen.fxml", display);
-
-  ArrayList<Map<String, String>> intro;
-  ArrayList<Map<String, String>> interlude;
-  ArrayList<Map<String, String>> outro;
+*/
 
 
-  LinkedList<ScreenController> screens = new LinkedList<>();
+  DoublyLinkedList<Card> cards;
+  DLLNode<Card> cardNode;
 
 
 
@@ -88,28 +76,111 @@ public class Main extends Application{
   }
 
 
+  public static ArrayList<Card> load(Config config, ScreenController sc, String item){
+    ArrayList<Card> cards = new ArrayList<>();
+    config.getConfigList(item)
+      .stream()
+      .forEach(c -> cards.add(new Card(c, sc)));
+    return cards;
+  }
+
+  public ArrayList<Card> loadRandomised(Config config, ScreenController sc, String item){
+    ArrayList<Card> cards = new ArrayList<>();
+    config.getConfigList(item)
+      .stream()
+      .forEach(c -> {
+        String category = c.getString("category");
+        List<String> names = Util.shuffle(config.getStringList("names"));
+        ArrayList<Map<String,String>> trials = new ArrayList<>();
+        Util.shuffle(config.getConfigList("trials"))
+          .stream()
+          .forEach(t -> {
+            Config trialConfig = (Config) t;
+            HashMap<String, String> m = new HashMap<>();
+            m.put("id", trialConfig.getString("id"));
+            m.put("type", trialConfig.getString("type"));
+            m.put("image", trialConfig.getString("image"));
+            m.put("text", trialConfig.getString("text"));
+            m.put("name", trialConfig.getString("name"));
+            if (trialConfig.hasPath("example")) { // config item is an example
+              m.put("example", trialConfig.getString("example"));
+            }
+            trials.add(m);
+          });
+
+        for(int i=0;i<trials.size();i++){
+          trials.get(i).put("name", names.get(i));
+          trials.get(i).put("category", category);
+          cards.add(new Card(ConfigFactory.parseMap(trials.get(i)), sc));
+        }
+      });
+
+    if(config.getBoolean("experiment.randomiseCategoryPresentation"))
+      return Util.shuffle(cards);
+    return cards;
+  }
+
+  @Override
+  public void handlePrevButtonEvent(ButtonEvent event) {
+    if (cards.hasPrevious(cardNode)) {
+      cardNode = cards.getPrevious(cardNode);
+      System.out.println("hasPrev");
+      cardNode.getElement().update();
+    }
+  }
+
+  @Override
+  public void handleNextButtonEvent(ButtonEvent event) {
+    if (cards.hasNext(cardNode)) {
+      cardNode = cards.getNext(cardNode);
+      System.out.println("hasNext");
+      cardNode.getElement().update();
+    }
+  }
+
+
+
+
+
+
+
+
+
 
   public void init(){
-    config = Configuration.loadConfig();
+    config = ConfigFactory.load();
+    cards = new DoublyLinkedList<>();
 
-    // init data sets
-    intro = Intro.load(config, "experiment.intro");
-    System.out.println("intro: " + intro);
 
-    ArrayList<Map<String, String>> examples = Trial.loadExampleRun(config, "experiment.examples");
-    System.out.println("examples: " + examples);
+    headingWithTextController.addEventListener((PrevButtonEventListener)this);
+    headingWithTextController.addEventListener((NextButtonEventListener)this);
+    pictureWithTextAndTextBoxController.addEventListener((PrevButtonEventListener)this);
+    pictureWithTextAndTextBoxController.addEventListener((NextButtonEventListener)this);
 
-    interlude = Intro.load(config, "experiment.interlude");
-    System.out.println("interlude: " + interlude);
+    // load cards
+    cards.addAll(load(config, headingWithTextController, "experiment.intro"));
+    cards.addAll(load(config, pictureWithTextAndTextBoxController, "experiment.examples"));
+    cards.addAll(load(config, headingWithTextController, "experiment.interlude"));
+    cards.addAll(loadRandomised(config, pictureWithTextAndTextBoxController, "experiment.blocks"));
+    // cards.add(details)
+    // cards.add(languages)
+    //cards.addAll(load(config, ?, "experiment.outro"));
 
-    ArrayList<HashMap<String, String>> trials = Trial.createRandomTrialRun(config, "experiment.blocks");
+    // get first card node
+    cardNode = cards.getFirst();
+
+
+
+
+
+
+    /*ArrayList<HashMap<String, String>> trials = Trial.createRandomTrialRun(config, "experiment.blocks");
     System.out.println("trials: " + trials);
 
     outro = Intro.load(config, "experiment.outro");
     System.out.println("outro: " + outro);
 
 
-    //screens.add(headingWithTextController);
 
     headingWithTextController.prevButton.setDisable(true);
     headingWithTextController.prevButton.setOnAction(e -> {
@@ -132,27 +203,27 @@ public class Main extends Application{
       }
       else {
         currentItem = 0;
-        exampleController.update(examples.get(currentItem));
+        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
       }
     });
 
 
-    exampleController.prevButton.setOnAction(e -> {
+    pictureWithTextAndTextBoxController.prevButton.setOnAction(e -> {
       if (currentItem > 0) {
         currentItem--;
-        exampleController.update(examples.get(currentItem));
+        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
       }
       else {
         currentItem = intro.size() -1;
-        //introController.update(intro.get(currentItem));
+        //headingWithTextController.update(intro.get(currentItem));
         headingWithTextController.update(intro.get(currentItem));
       }
     });
 
-    exampleController.nextButton.setOnAction(e -> {
+    pictureWithTextAndTextBoxController.nextButton.setOnAction(e -> {
       if (currentItem < examples.size() - 1) {
         currentItem++;
-        exampleController.update(examples.get(currentItem));
+        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
       }
       else {
         currentItem = 0;
@@ -167,7 +238,7 @@ public class Main extends Application{
       }
       else {
         currentItem = examples.size() -1;
-        exampleController.update(examples.get(currentItem));
+        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
       }
     });
 
@@ -179,32 +250,11 @@ public class Main extends Application{
       else {
         currentItem = 0;
         //trialController.update(trials.get(currentItem));
-        pictureWithTextAndTextBoxController.update(trials.get(currentItem));
+        trialController.update(trials.get(currentItem));
       }
     });
 
-    pictureWithTextAndTextBoxController.prevButton.setOnAction(e -> {
-      if (currentItem > 0) {
-        currentItem--;
-        pictureWithTextAndTextBoxController.update(trials.get(currentItem));
-      } else {
-        currentItem = interlude.size() -1;
-        interludeController.update(interlude.get(currentItem));
-      }
-    });
-
-    pictureWithTextAndTextBoxController.nextButton.setOnAction(e -> {
-      if (currentItem < trials.size() - 1) {
-        store.addTrial(trials.get(currentItem), pictureWithTextAndTextBoxController.getResult());
-        currentItem++;
-        pictureWithTextAndTextBoxController.update(trials.get(currentItem));
-      } else {
-        currentItem = 0;
-        detailController.load();
-      }
-    });
-
-    /*trialController.prevButton.setOnAction(e -> {
+    trialController.prevButton.setOnAction(e -> {
       if (currentItem > 0) {
         currentItem--;
         trialController.update(trials.get(currentItem));
@@ -223,12 +273,13 @@ public class Main extends Application{
         currentItem = 0;
         detailController.load();
       }
-    });*/
+    });
+
 
     detailController.prevButton.setOnAction(e -> {
       currentItem = trials.size() - 1;
       //trialController.update(trials.get(currentItem));
-      pictureWithTextAndTextBoxController.update(trials.get(currentItem));
+      trialController.update(trials.get(currentItem));
     });
     detailController.nextButton.setOnAction(e -> {
       store.addDetail(detailController.getResult());
@@ -262,14 +313,14 @@ public class Main extends Application{
         currentItem = 0;
         endExercise();
       }
-    });
+    });*/
 
   }
 
 
   public void start(Stage primaryStage) {
-    headingWithTextController.load(intro.get(currentItem));
-    init(primaryStage, Configuration.getConfigString(config, "experiment.title"));
+    cardNode.getElement().load();
+    init(primaryStage, config.getString("experiment.title"));
     primaryStage.show();
   }
 
