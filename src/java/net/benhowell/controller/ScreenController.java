@@ -24,23 +24,25 @@
 
 package net.benhowell.controller;
 
+import com.typesafe.config.Config;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import net.benhowell.core.ButtonEvent;
+import net.benhowell.core.NextButtonEventListener;
 import net.benhowell.core.Display;
+import net.benhowell.core.PrevButtonEventListener;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
  */
 public class ScreenController {
-
 
   @FXML protected GridPane gridPane;
   @FXML public Button nextButton;
@@ -48,9 +50,16 @@ public class ScreenController {
 
   private Display display;
   private Node node;
+  private final List<PrevButtonEventListener> prevButtonEventListeners;
+  private final List<NextButtonEventListener> nextButtonEventListeners;
+
 
   public ScreenController(ControllerLoader loader, String resource, Display display) {
     this.display = display;
+
+    this.prevButtonEventListeners = new CopyOnWriteArrayList<>();
+    this.nextButtonEventListeners = new CopyOnWriteArrayList<>();
+
     try {
       this.node = loader.controllerLoader(this, resource);
     }
@@ -59,16 +68,70 @@ public class ScreenController {
     }
   }
 
-  public void load(){ display.loadScreen(node); }
 
-  public void update(final Runnable f) {
+  public void load(Config c){}
+  public void update(Config c){}
+
+
+  public void addEventListener(PrevButtonEventListener listener) {
+    prevButtonEventListeners.add(listener);
+  }
+
+
+  public void addEventListener(NextButtonEventListener listener) {
+    nextButtonEventListeners.add(listener);
+  }
+
+
+  public void removeEventListener(PrevButtonEventListener listener) {
+    prevButtonEventListeners.remove(listener);
+  }
+
+
+  public void removeEventListener(NextButtonEventListener listener) {
+    nextButtonEventListeners.remove(listener);
+  }
+
+
+  protected void load(){
+    display.loadScreen(node);
+  }
+
+
+  protected void update(final Runnable f) {
     Platform.runLater(f);
     Platform.runLater(() -> load());
   }
 
-  /*public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
-  }*/
+
+  protected void switchStyle(Node node, String oldStyle, String newStyle){
+    removeStyle(node, oldStyle);
+    addStyle(node, newStyle);
+  }
 
 
+  protected void addStyle(Node node, String style) {
+    node.getStyleClass().add(style);
+  }
+
+
+  protected void removeStyle(Node node, String style) {
+    node.getStyleClass().remove(style);
+  }
+
+
+  protected void triggerPrevButtonEvent() {
+    ButtonEvent event = new ButtonEvent(this);
+    prevButtonEventListeners
+      .stream()
+      .forEach(l -> l.handlePrevButtonEvent(event));
+  }
+
+
+  protected void triggerNextButtonEvent() {
+    ButtonEvent event = new ButtonEvent(this);
+    nextButtonEventListeners
+      .stream()
+      .forEach(l -> l.handleNextButtonEvent(event));
+  }
 }
