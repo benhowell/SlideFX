@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <GridPane id="gridPane" fx:id="gridPane" gridLinesVisible="false" hgap="0.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" vgap="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <HBox id="hBox" fx:id="hBox" alignment="CENTER_RIGHT" fillHeight="false" pickOnBounds="true" prefHeight="100.0" prefWidth="800.0" visible="true" GridPane.rowIndex="4">
+        <HBox id="hBox" fx:id="hBox" alignment="CENTER_RIGHT" fillHeight="false" pickOnBounds="true" prefHeight="100.0" prefWidth="800.0" visible="true" GridPane.rowIndex="1">
             <children>
                 <Button fx:id="prevButton" mnemonicParsing="false" text="&lt;- Back" />
                 <Separator fx:id="separator" prefWidth="5.0" />
@@ -11,4 +14,14 @@
             </children>
         </HBox>
     </children>
+<columnConstraints>
+<ColumnConstraints />
+</columnConstraints>
+<rowConstraints>
+<RowConstraints maxHeight="567.0" minHeight="567.0" prefHeight="567.0" />
+<RowConstraints maxHeight="33.0" minHeight="33.0" prefHeight="33.0" />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+</rowConstraints>
 </GridPane>
