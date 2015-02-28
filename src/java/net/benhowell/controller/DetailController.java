@@ -48,60 +48,35 @@ import java.util.stream.IntStream;
  */
 public class DetailController extends ScreenController implements Initializable {
 
-  //@FXML
-  private GridPane detailGridPane;
-  //@FXML public Button nextButton = null;
-  //@FXML public Button prevButton = null;
-  //@FXML
-  private ComboBox<String> sexComboBox = null;
-  //@FXML
-  private ComboBox<Integer> ageComboBox = null;
-  //@FXML
-  private ComboBox<Integer> yearComboBox = null;
-  //@FXML
-  private ComboBox<Integer> monthComboBox = null;
-  //@FXML
-  private ComboBox<String> firstLanguageComboBox = null;
-  private String resource;
+  @FXML
+  private ComboBox<String> sexComboBox;
+  @FXML
+  private ComboBox<Integer> ageComboBox;
+  @FXML
+  private ComboBox<Integer> yearComboBox;
+  @FXML
+  private ComboBox<Integer> monthComboBox;
+  @FXML
+  private ComboBox<String> firstLanguageComboBox;
+  //private String resource;
 
-  private Display display;
-  private Node childNode;
+  //private Display display;
+  private Node child;
 
-  public DetailController(ControllerLoader loader, String resource, Display display, Store store){
-    super(loader, resource, display);
+  public DetailController(ControllerLoader loader, Display display, Store store){
+    super(loader, "Screen.fxml", display);
 
-    //this.resource = "Detail.fxml";
-    //this.display = display;
-    /*try {
-      childNode = loader.controllerLoader(this, "Detail.fxml");
+    try {
+      child = loader.controllerLoader(this, "Detail.fxml");
     }
     catch (IOException e) {
       System.out.println("Controller loader failed to load view: " + e);
     }
+    GridPane.setRowIndex(child, 0);
+    gridPane.getChildren().add(0,child);
 
-    gridPane.getChildren().add(childNode);*/
-    this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
-    this.nextButton.setOnAction(e -> triggerNextButtonEvent());
-  }
 
-  public Map<String, String> getResult(){
-    Map<String, String> m = new HashMap<>();
-    m.put("sex", sexComboBox.getValue());
-    m.put("age", ageComboBox.getValue().toString());
-    m.put("yearsInAustralia", yearComboBox.getValue().toString());
-    m.put("monthsInAustralia", monthComboBox.getValue().toString());
-    m.put("firstLanguage", firstLanguageComboBox.getValue());
-    return m;
-  }
 
-  public void update(Config items) {
-    super.update(() -> {
-      nextButton.requestFocus();
-    });
-  }
-
-  public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
 
     sexComboBox.getItems().addAll(
         "Female",
@@ -136,6 +111,41 @@ public class DetailController extends ScreenController implements Initializable 
 
     firstLanguageComboBox.getItems().addAll(FXCollections.observableList(langList));
     firstLanguageComboBox.setValue("English");
+
+
+
+
+    this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
+    this.nextButton.setOnAction(e -> {
+      store.addDetail(getResult());
+      triggerNextButtonEvent();
+    });
+  }
+
+  public Map<String, String> getResult(){
+    Map<String, String> m = new HashMap<>();
+    m.put("sex", sexComboBox.getValue());
+    m.put("age", ageComboBox.getValue().toString());
+    m.put("yearsInAustralia", yearComboBox.getValue().toString());
+    m.put("monthsInAustralia", monthComboBox.getValue().toString());
+    m.put("firstLanguage", firstLanguageComboBox.getValue());
+    return m;
+  }
+
+  public void load(Config items) {
+
+  }
+
+  public void update(Config items) {
+    super.update(() -> {
+      nextButton.requestFocus();
+    });
+  }
+
+  public void initialize(URL url, ResourceBundle rb) {
+    System.out.println(this.getClass().getSimpleName() + ".initialise");
+
+
   }
 
 
