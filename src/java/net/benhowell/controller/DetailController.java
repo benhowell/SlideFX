@@ -48,32 +48,15 @@ import java.util.stream.IntStream;
  */
 public class DetailController extends ScreenController implements Initializable {
 
-  @FXML
-  private ComboBox<String> sexComboBox;
-  @FXML
-  private ComboBox<Integer> ageComboBox;
-  @FXML
-  private ComboBox<Integer> yearComboBox;
-  @FXML
-  private ComboBox<Integer> monthComboBox;
-  @FXML
-  private ComboBox<String> firstLanguageComboBox;
-  //private String resource;
-
-  //private Display display;
+  @FXML private ComboBox<String> sexComboBox;
+  @FXML private ComboBox<Integer> ageComboBox;
+  @FXML private ComboBox<Integer> yearComboBox;
+  @FXML private ComboBox<Integer> monthComboBox;
+  @FXML private ComboBox<String> firstLanguageComboBox;
   private Node child;
 
   public DetailController(ControllerLoader loader, Display display, Store store){
-    super(loader, "Screen.fxml", display);
-
-    try {
-      child = loader.controllerLoader(this, "Detail.fxml");
-    }
-    catch (IOException e) {
-      System.out.println("Controller loader failed to load view: " + e);
-    }
-    GridPane.setRowIndex(child, 0);
-    gridPane.getChildren().add(0,child);
+    super(loader, "Detail.fxml", display);
 
 
 
