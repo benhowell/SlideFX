@@ -57,8 +57,8 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
 
   private Store store;
   private Config config;
-  @FXML private ImageView imageView = null;
-  @FXML private Label label = null;
+  @FXML private ImageView imageView;
+  @FXML private Label label;
   @FXML private TextField textField;
   //@FXML private BorderPane borderPane;
   private Label validationLabel;
@@ -67,20 +67,9 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
   private Node child;
 
   public ImgTextTextBoxController(ControllerLoader loader, Display display, Store store){
-    super(loader, "Screen.fxml", display);
+    super(loader, "ImgTextTextBox.fxml", display);
 
     this.store = store;
-
-    try {
-      child = loader.controllerLoader(this, "ImgTextTextBox.fxml");
-    }
-    catch (IOException e) {
-      System.out.println("Controller loader failed to load view: " + e);
-    }
-
-    GridPane.setRowIndex(child, 0);
-    gridPane.getChildren().add(0, child);
-
 
     validationLabel = new Label();
     validationLabel.setPrefHeight(30.0);
