@@ -78,15 +78,10 @@ public class ScreenController {
     }
     GridPane.setRowIndex(child, 0);
     gridPane.getChildren().add(0, child);
-
   }
-
-
-
 
   public void load(Config c){}
   public void update(Config c){}
-
 
   public void addEventListener(PrevButtonEventListener listener) {
     prevButtonEventListeners.add(listener);
