@@ -43,9 +43,4 @@ public class Display extends StackPane{
       getChildren().add(screen);
     }
   }
-
-
-  public void fxRun(final Runnable f){
-    Platform.runLater(f);
-  }
 }
