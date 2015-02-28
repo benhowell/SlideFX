@@ -47,6 +47,9 @@ import java.util.*;
  */
 public class Main extends Application implements PrevButtonEventListener, NextButtonEventListener {
 
+  DoublyLinkedList<Card> cards;
+  Node<Card> card;
+
   Stage stage = null;
   Config config;
   Display display = new Display();
@@ -54,33 +57,20 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   Store store = new Store();
 
   // init controllers
-  HeadingWithTextController headingWithTextController = new HeadingWithTextController(loader, "Screen.fxml", display);
-  PictureWithTextAndTextBoxController pictureWithTextAndTextBoxController = new PictureWithTextAndTextBoxController(loader, "Screen.fxml", display, store);
-  DetailController detailController = new DetailController(loader, "Screen.fxml", display, store);
-  /*
-  DetailController detailController = new DetailController(loader, "PersonalDetailGridPane.fxml", display);
-  LanguageController languageController = new LanguageController(loader, "LanguageGridPane.fxml", display);
-
-  HeadingWithTextController outroController = new HeadingWithTextController(loader, "Screen.fxml", display);
-*/
-
-
-  DoublyLinkedList<Card> cards;
-  Node<Card> card;
-
-
+  HeadingWithTextController headingWithTextController = new HeadingWithTextController(loader, display);
+  ImgTextTextBoxController imgTextTextBoxController = new ImgTextTextBoxController(loader, display, store);
+  DetailController detailController = new DetailController(loader, display, store);
+  LanguageController languageController = new LanguageController(loader, display, store);
 
   public static void main(String[] args) {
     launch(args);
   }
-
 
   public static ArrayList<Card> load(ScreenController sc){
     ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(sc));
     return cards;
   }
-
 
   public static ArrayList<Card> load(Config config, ScreenController sc, String item){
     ArrayList<Card> cards = new ArrayList<>();
@@ -140,15 +130,10 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
       card = card.next();
       card.element().update();
     }
+    else{
+      endExercise();
+    }
   }
-
-
-
-
-
-
-
-
 
 
   public void init(){
@@ -158,169 +143,25 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
     headingWithTextController.addEventListener((PrevButtonEventListener)this);
     headingWithTextController.addEventListener((NextButtonEventListener)this);
-    pictureWithTextAndTextBoxController.addEventListener((PrevButtonEventListener)this);
-    pictureWithTextAndTextBoxController.addEventListener((NextButtonEventListener)this);
+    imgTextTextBoxController.addEventListener((PrevButtonEventListener)this);
+    imgTextTextBoxController.addEventListener((NextButtonEventListener)this);
     detailController.addEventListener((PrevButtonEventListener)this);
     detailController.addEventListener((NextButtonEventListener) this);
+    languageController.addEventListener((PrevButtonEventListener)this);
+    languageController.addEventListener((NextButtonEventListener) this);
 
     // load cards
     cards.addAll(load(config, headingWithTextController, "experiment.intro"));
-    cards.addAll(load(config, pictureWithTextAndTextBoxController, "experiment.examples"));
+    cards.addAll(load(config, imgTextTextBoxController, "experiment.examples"));
     cards.addAll(load(config, headingWithTextController, "experiment.interlude"));
-    cards.addAll(loadRandomised(config, pictureWithTextAndTextBoxController, "experiment.blocks"));
+    cards.addAll(loadRandomised(config, imgTextTextBoxController, "experiment.blocks"));
     cards.addAll(load(detailController));
-    // cards.add(languages)
-    //cards.addAll(load(config, ?, "experiment.outro"));
+    cards.addAll(load(languageController));
+    cards.addAll(load(config, headingWithTextController, "experiment.outro"));
 
     System.out.println("cards: " + cards.toString());
     // get first card node
     card = cards.getFirst();
-
-
-
-
-
-
-    /*ArrayList<HashMap<String, String>> trials = Trial.createRandomTrialRun(config, "experiment.blocks");
-    System.out.println("trials: " + trials);
-
-    outro = Intro.load(config, "experiment.outro");
-    System.out.println("outro: " + outro);
-
-
-
-    headingWithTextController.prevButton.setDisable(true);
-    headingWithTextController.prevButton.setOnAction(e -> {
-      if (currentItem > 0) {
-        currentItem--;
-        if(currentItem == 0)
-          headingWithTextController.prevButton.setDisable(true);
-        headingWithTextController.update(intro.get(currentItem));
-      }
-      else {
-        System.out.println("no prev!");
-      }
-    });
-
-    headingWithTextController.nextButton.setOnAction(e -> {
-      headingWithTextController.prevButton.setDisable(false);
-      if (currentItem < intro.size() - 1) {
-        currentItem++;
-        headingWithTextController.update(intro.get(currentItem));
-      }
-      else {
-        currentItem = 0;
-        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
-      }
-    });
-
-
-    pictureWithTextAndTextBoxController.prevButton.setOnAction(e -> {
-      if (currentItem > 0) {
-        currentItem--;
-        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
-      }
-      else {
-        currentItem = intro.size() -1;
-        //headingWithTextController.update(intro.get(currentItem));
-        headingWithTextController.update(intro.get(currentItem));
-      }
-    });
-
-    pictureWithTextAndTextBoxController.nextButton.setOnAction(e -> {
-      if (currentItem < examples.size() - 1) {
-        currentItem++;
-        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
-      }
-      else {
-        currentItem = 0;
-        interludeController.update(interlude.get(currentItem));
-      }
-    });
-
-    interludeController.prevButton.setOnAction(e -> {
-      if (currentItem > 0) {
-        currentItem--;
-        interludeController.update(interlude.get(currentItem));
-      }
-      else {
-        currentItem = examples.size() -1;
-        pictureWithTextAndTextBoxController.update(examples.get(currentItem));
-      }
-    });
-
-    interludeController.nextButton.setOnAction(e -> {
-      if (currentItem < interlude.size() - 1) {
-        currentItem++;
-        interludeController.update(interlude.get(currentItem));
-      }
-      else {
-        currentItem = 0;
-        //trialController.update(trials.get(currentItem));
-        trialController.update(trials.get(currentItem));
-      }
-    });
-
-    trialController.prevButton.setOnAction(e -> {
-      if (currentItem > 0) {
-        currentItem--;
-        trialController.update(trials.get(currentItem));
-      } else {
-        currentItem = interlude.size() -1;
-        interludeController.update(interlude.get(currentItem));
-      }
-    });
-
-    trialController.nextButton.setOnAction(e -> {
-      if (currentItem < trials.size() - 1) {
-        store.addTrial(trials.get(currentItem), trialController.getResult());
-        currentItem++;
-        trialController.update(trials.get(currentItem));
-      } else {
-        currentItem = 0;
-        detailController.load();
-      }
-    });
-
-
-    detailController.prevButton.setOnAction(e -> {
-      currentItem = trials.size() - 1;
-      //trialController.update(trials.get(currentItem));
-      trialController.update(trials.get(currentItem));
-    });
-    detailController.nextButton.setOnAction(e -> {
-      store.addDetail(detailController.getResult());
-      languageController.load();
-    });
-
-    languageController.prevButton.setOnAction(e -> detailController.load());
-    languageController.nextButton.setOnAction(e -> {
-      currentItem = 0;
-      store.addLanguage(languageController.getResult());
-      outroController.update(outro.get(currentItem));
-    });
-
-    outroController.prevButton.setOnAction(e -> {
-      if (currentItem > 0) {
-        currentItem--;
-        outroController.update(outro.get(currentItem));
-      }
-      else {
-        currentItem = 0;
-        languageController.load();
-      }
-    });
-
-    outroController.nextButton.setOnAction(e -> {
-      if (currentItem < outro.size() - 1) {
-        currentItem++;
-        outroController.update(outro.get(currentItem));
-      }
-      else {
-        currentItem = 0;
-        endExercise();
-      }
-    });*/
 
   }
 
