@@ -25,6 +25,7 @@
 package net.benhowell.controller;
 
 
+import com.typesafe.config.Config;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +36,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import net.benhowell.core.Display;
+import net.benhowell.core.Store;
 import net.benhowell.core.Util;
 
 import java.io.IOException;
@@ -46,49 +48,38 @@ import java.util.*;
  * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
  */
 
-public class LanguageController extends ControllerLoader implements Initializable {
+public class LanguageController extends ScreenController implements Initializable {
 
-  @FXML private GridPane languageGridPane = null;
-  @FXML public Button nextButton = null;
-  @FXML public Button prevButton = null;
+  /*@FXML private GridPane gridPane;
+  @FXML public Button nextButton;
+  @FXML public Button prevButton;*/
 
-  @FXML private TableView<LangControllerRow> languageTableView = null;
-  @FXML private TableColumn<LangControllerRow, String> languageColumn = null;
-  @FXML private TableColumn<LangControllerRow, String> fluencyColumn = null;
-  @FXML private TableColumn<LangControllerRow, Boolean> removeColumn = null;
-  @FXML private ComboBox<String> languageComboBox = null;
-  @FXML private ComboBox<String> fluencyComboBox = null;
-  @FXML private Button addButton = null;
+  @FXML private TableView<LangControllerRow> languageTableView;
+  @FXML private TableColumn<LangControllerRow, String> languageColumn;
+  @FXML private TableColumn<LangControllerRow, String> fluencyColumn;
+  @FXML private TableColumn<LangControllerRow, Boolean> removeColumn;
+  @FXML private ComboBox<String> languageComboBox;
+  @FXML private ComboBox<String> fluencyComboBox;
+  @FXML private Button addButton;
 
-  private Display display;
-  private Node node;
+  private Node child;
+
   private ObservableList<LangControllerRow> data;
 
-  public LanguageController(ControllerLoader loader, String resource, Display display){
-    this.display = display;
+  public LanguageController(ControllerLoader loader, Display display, Store store){
+    super(loader, "Screen.fxml", display);
+
     try {
-      node = loader.controllerLoader(this, resource);
+      child = loader.controllerLoader(this, "LanguageGridPane.fxml");
     }
     catch (IOException e) {
       System.out.println("Controller loader failed to load view: " + e);
     }
-  }
+    GridPane.setRowIndex(child, 0);
+    gridPane.getChildren().add(0, child);
 
-  public Map<String, String> getResult(){
-    Map<String, String> m = new HashMap<>();
-    data.stream().forEach(d -> m.put(d.getLanguage(), d.getFluency()));
-    return m;
-  }
 
-  public void load() {
-    display.fxRun( () -> {
-      display.loadScreen(node);
-      nextButton.requestFocus();
-    } );
-  }
 
-  public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
 
     List<String> langList = Util.listFromResource("/iso639-1.txt");
 
@@ -97,7 +88,7 @@ public class LanguageController extends ControllerLoader implements Initializabl
     fluencyList.add("Semi-fluent");
     fluencyList.add("Basic");
 
-     data = FXCollections.observableArrayList();
+    data = FXCollections.observableArrayList();
 
     languageComboBox.getItems().addAll(FXCollections.observableList(langList));
     languageComboBox.setValue("Chinese (Simplified)");
@@ -106,12 +97,12 @@ public class LanguageController extends ControllerLoader implements Initializabl
     fluencyComboBox.setValue("Basic");
 
     languageColumn.setCellValueFactory(
-      new PropertyValueFactory<>("language")
+        new PropertyValueFactory<>("language")
     );
     languageColumn.setEditable(true);
 
     fluencyColumn.setCellValueFactory(
-      new PropertyValueFactory<>("fluency")
+        new PropertyValueFactory<>("fluency")
     );
     fluencyColumn.setEditable(true);
 
@@ -129,6 +120,37 @@ public class LanguageController extends ControllerLoader implements Initializabl
     addButton.setOnAction(e ->
         data.add(new LangControllerRow(languageComboBox.getValue(), fluencyComboBox.getValue())));
 
+
+    this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
+    //this.nextButton.setOnAction(e -> triggerNextButtonEvent());
+    this.nextButton.setOnAction(e -> {
+        store.addLanguage(getResult());
+      triggerNextButtonEvent();
+    });
+  }
+
+  public void load(Config items) {
+
+  }
+
+  public void update(Config items) {
+    System.out.println("language!!!");
+    super.update(() -> {
+      nextButton.requestFocus();
+    });
+  }
+
+
+  public Map<String, String> getResult(){
+    Map<String, String> m = new HashMap<>();
+    data.stream().forEach(d -> m.put(d.getLanguage(), d.getFluency()));
+    return m;
+  }
+
+
+
+  public void initialize(URL url, ResourceBundle rb) {
+    System.out.println(this.getClass().getSimpleName() + ".initialise");
 
   }
 
