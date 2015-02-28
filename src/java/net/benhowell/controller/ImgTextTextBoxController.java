@@ -66,8 +66,8 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
 
   private Node child;
 
-  public ImgTextTextBoxController(ControllerLoader loader, Display display, Store store){
-    super(loader, "ImgTextTextBox.fxml", display);
+  public ImgTextTextBoxController(Display display, Store store){
+    super("ImgTextTextBox.fxml", display);
 
     this.store = store;
 

@@ -46,8 +46,8 @@ public class HeadingWithTextController extends ScreenController implements Initi
   @FXML private Label headingLabel;
   private Node child;
 
-  public HeadingWithTextController(ControllerLoader loader, Display display) {
-    super(loader, "HeadingWithText.fxml", display);
+  public HeadingWithTextController(Display display) {
+    super("HeadingWithText.fxml", display);
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> triggerNextButtonEvent());

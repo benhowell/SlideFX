@@ -61,8 +61,8 @@ public class LanguageController extends ScreenController implements Initializabl
 
   private ObservableList<LangControllerRow> data;
 
-  public LanguageController(ControllerLoader loader, Display display, Store store){
-    super(loader, "LanguageGridPane.fxml", display);
+  public LanguageController(Display display, Store store){
+    super("LanguageGridPane.fxml", display);
 
     List<String> langList = Util.listFromResource("/iso639-1.txt");
 

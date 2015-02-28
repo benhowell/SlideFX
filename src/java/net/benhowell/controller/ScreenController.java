@@ -54,8 +54,9 @@ public class ScreenController {
   private final List<PrevButtonEventListener> prevButtonEventListeners;
   private final List<NextButtonEventListener> nextButtonEventListeners;
 
+  ControllerLoader loader = new ControllerLoader();
 
-  public ScreenController(ControllerLoader loader, String resource, Display display) {
+  public ScreenController(String resource, Display display) {
     this.display = display;
 
     this.prevButtonEventListeners = new CopyOnWriteArrayList<>();

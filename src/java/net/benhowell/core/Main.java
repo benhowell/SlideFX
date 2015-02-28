@@ -53,14 +53,14 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   Stage stage = null;
   Config config;
   Display display = new Display();
-  ControllerLoader loader = new ControllerLoader();
+
   Store store = new Store();
 
   // init controllers
-  HeadingWithTextController headingWithTextController = new HeadingWithTextController(loader, display);
-  ImgTextTextBoxController imgTextTextBoxController = new ImgTextTextBoxController(loader, display, store);
-  DetailController detailController = new DetailController(loader, display, store);
-  LanguageController languageController = new LanguageController(loader, display, store);
+  HeadingWithTextController headingWithTextController = new HeadingWithTextController(display);
+  ImgTextTextBoxController imgTextTextBoxController = new ImgTextTextBoxController(display, store);
+  DetailController detailController = new DetailController(display, store);
+  LanguageController languageController = new LanguageController(display, store);
 
   public static void main(String[] args) {
     launch(args);
