@@ -63,20 +63,10 @@ public class ScreenController {
     this.nextButtonEventListeners = new CopyOnWriteArrayList<>();
 
     // load screen shell...
-    try {
-      this.node = loader.controllerLoader(this, "Screen.fxml");
-    }
-    catch (IOException e) {
-      System.out.println("Controller loader failed to load view: " + e);
-    }
+    this.node = loadView("Screen.fxml");
 
     // load child and insert into screen shell
-    try {
-      child = loader.controllerLoader(this, resource);
-    }
-    catch (IOException e) {
-      System.out.println("Controller loader failed to load view: " + e);
-    }
+    this.child = loadView(resource);
     GridPane.setRowIndex(child, 0);
     gridPane.getChildren().add(0, child);
   }
@@ -144,5 +134,17 @@ public class ScreenController {
     nextButtonEventListeners
       .stream()
       .forEach(l -> l.handleNextButtonEvent(event));
+  }
+
+
+  private Node loadView(String view){
+    Node n = null;
+    try {
+      n = loader.controllerLoader(this, view);
+    }
+    catch (IOException e) {
+      System.out.println("Controller loader failed to load view: " + e);
+    }
+    return n;
   }
 }
