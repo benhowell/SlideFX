@@ -76,8 +76,6 @@ class Node<T> {
 }
 
 
-
-
 public class DoublyLinkedList<T> {
 
   private Node<T> head;
@@ -106,20 +104,6 @@ public class DoublyLinkedList<T> {
   public void addAll(Collection<? extends T> c){
     c.stream().forEach(t -> add(t));
   }
-
-
-  /*public boolean hasPrevious(DLLNode<T> node){
-    if(node.previous() == head)
-      return false;
-    return true;
-  }
-
-
-  public boolean hasNext(DLLNode<T> node){
-    if(node.next() == tail)
-      return false;
-    return true;
-  }*/
 
 
   public Node<T> removeFirst() throws RuntimeException{
@@ -154,6 +138,7 @@ public class DoublyLinkedList<T> {
   public boolean isEmpty(){
     return size == 0;
   }
+
 
   public String toString(){
     String s = "[";
