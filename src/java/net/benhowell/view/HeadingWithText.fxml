@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane id="introGridPane" fx:id="introGridPane" gridLinesVisible="false" hgap="0.0" padding="$x1" prefHeight="500.0" prefWidth="800.0" stylesheets="@style.css" vgap="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <Label fx:id="headingLabel" alignment="TOP_CENTER" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="800.0" scaleX="1.0" scaleY="1.0" style="-fx-padding: 0 70 0 70;" textAlignment="CENTER" wrapText="true">
+      <font>
+        <Font size="38.0" />
+      </font>
+      <GridPane.margin>
+        <Insets fx:id="x1" />
+      </GridPane.margin>
+    </Label>
+    <TextFlow prefHeight="200.0" prefWidth="200.0" styleClass="paragraph" GridPane.rowIndex="1">
+<children><TextArea fx:id="bodyTextArea" editable="false" focusTraversable="false" prefHeight="400.0" prefWidth="800.0" styleClass="paragraph" wrapText="true" />
+</children></TextFlow>
+  </children>
+  <columnConstraints>
+    <ColumnConstraints hgrow="NEVER" maxWidth="800.0" minWidth="800.0" prefWidth="800.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="118.0" minHeight="118.0" prefHeight="118.0" vgrow="NEVER" />
+    <RowConstraints maxHeight="332.0" minHeight="332.0" prefHeight="332.0" valignment="TOP" vgrow="NEVER" />
+    <RowConstraints maxHeight="55.0" minHeight="55.0" prefHeight="55.0" valignment="TOP" vgrow="NEVER" />
+    <RowConstraints maxHeight="62.0" minHeight="62.0" prefHeight="62.0" valignment="CENTER" vgrow="ALWAYS" />
+  </rowConstraints>
+</GridPane>
