@@ -31,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -41,6 +42,7 @@ import javafx.scene.text.TextAlignment;
 import net.benhowell.core.Display;
 import net.benhowell.core.Store;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,76 +53,44 @@ import java.util.ResourceBundle;
 /**
  * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
  */
-public class PictureWithTextAndTextBoxController extends ScreenController implements Initializable {
+public class ImgTextTextBoxController extends ScreenController implements Initializable {
 
   private Store store;
   private Config config;
-  private ImageView imageView = null;
-  private Label label = null;
-  private TextField textField = null;
-  private BorderPane borderPane = null;
-  private Label validationLabel = null;
+  @FXML private ImageView imageView = null;
+  @FXML private Label label = null;
+  @FXML private TextField textField;
+  //@FXML private BorderPane borderPane;
+  private Label validationLabel;
   @FXML private HBox hBox;
 
-  public PictureWithTextAndTextBoxController(ControllerLoader loader, String resource, Display display, Store store){
-    super(loader, resource, display);
+  private Node child;
+
+  public ImgTextTextBoxController(ControllerLoader loader, Display display, Store store){
+    super(loader, "Screen.fxml", display);
 
     this.store = store;
 
-    borderPane = new BorderPane();
-    borderPane.prefHeight(200.0);
-    borderPane.prefWidth(200.0);
-    GridPane.setHalignment(borderPane, HPos.CENTER);
-    GridPane.setValignment(borderPane, VPos.CENTER);
-    GridPane.setRowIndex(borderPane, 0);
+    try {
+      child = loader.controllerLoader(this, "ImgTextTextBox.fxml");
+    }
+    catch (IOException e) {
+      System.out.println("Controller loader failed to load view: " + e);
+    }
 
-    gridPane.getChildren().add(borderPane);
+    GridPane.setRowIndex(child, 0);
+    gridPane.getChildren().add(0, child);
 
-    imageView = new ImageView();
-    imageView.setFitHeight(300.0);
-    imageView.setFitWidth(400.0);
-    imageView.setPickOnBounds(true);
-    imageView.setPreserveRatio(true);
-    BorderPane.setAlignment(imageView, Pos.CENTER);
-    borderPane.setCenter(imageView);
-
-    label = new Label();
-    label.setPrefWidth(800.0);
-    label.setPrefHeight(-1.0);
-    label.setMaxHeight(-1.0);
-    label.setMaxWidth(-1.0);
-    label.setMinHeight(-1.0);
-    label.setMinWidth(-1.0);
-    label.setScaleX(1.0);
-    label.setScaleY(1.0);
-    label.setAlignment(Pos.TOP_CENTER);
-    label.setFont(new Font(30.0));
-    label.setTextAlignment(TextAlignment.CENTER);
-    label.setWrapText(true);
-    label.setStyle("-fx-padding: 0 70 0 70;");
-    GridPane.setRowIndex(label, 2);
-    gridPane.getChildren().add(label);
-
-    textField = new TextField();
-    textField.setPrefWidth(640.0);
-    textField.setMaxWidth(Double.NEGATIVE_INFINITY);
-    textField.setMinHeight(-1.0);
-    textField.setMinWidth(Double.NEGATIVE_INFINITY);
-
-    textField.setAlignment(Pos.CENTER_LEFT);
-    textField.setStyle("-fx-font-size: 30.0;");
-    GridPane.setHalignment(textField, HPos.CENTER);
-    GridPane.setRowIndex(textField, 3);
-    gridPane.getChildren().add(textField);
 
     validationLabel = new Label();
     validationLabel.setPrefHeight(30.0);
     validationLabel.setPrefWidth(568.0000999999975);
     validationLabel.setText("Error: Please enter a name containing alphabetical characters only!");
     validationLabel.setVisible(false);
-    hBox.getChildren().add(0,validationLabel);
 
     nextButton.setDisable(true);
+
+    hBox.getChildren().add(0,validationLabel);
 
     textField.textProperty().addListener((observable, oldValue, newValue) -> {
       if(newValue.matches("^[a-zA-Z\\s]+$"))
@@ -131,42 +101,6 @@ public class PictureWithTextAndTextBoxController extends ScreenController implem
         invalidInput();
     });
 
-    ColumnConstraints columnConstraints = new ColumnConstraints();
-    columnConstraints.setHgrow(Priority.NEVER);
-    columnConstraints.setMaxWidth(800.0);
-    columnConstraints.setMinWidth(800.0);
-    columnConstraints.setPrefWidth(800.0);
-    gridPane.getColumnConstraints().addAll(columnConstraints);
-
-    RowConstraints r1 = new RowConstraints();
-    RowConstraints r2 = new RowConstraints();
-    RowConstraints r3 = new RowConstraints();
-    RowConstraints r4 = new RowConstraints();
-    RowConstraints r5 = new RowConstraints();
-    r1.setPrefHeight(350.0);
-    r1.setVgrow(Priority.NEVER);
-
-    r2.setMinHeight(10.0);
-    r2.setPrefHeight(30.0);
-    r2.setValignment(VPos.TOP);
-    r2.setVgrow(Priority.NEVER);
-
-    r3.setMinHeight(140.0);
-    r3.setPrefHeight(140.0);
-    r3.setValignment(VPos.TOP);
-    r3.setVgrow(Priority.NEVER);
-
-    r4.setMinHeight(10.0);
-    r4.setPrefHeight(60.0);
-    r4.setValignment(VPos.CENTER);
-    r4.setVgrow(Priority.ALWAYS);
-
-    r5.setMinHeight(20.0);
-    r5.setPrefHeight(35.0);
-    r5.setVgrow(Priority.NEVER);
-
-    gridPane.getRowConstraints().addAll(r1, r2, r3, r4, r5);
-
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
 
@@ -175,9 +109,6 @@ public class PictureWithTextAndTextBoxController extends ScreenController implem
         store.addTrial(config, getResult());
       triggerNextButtonEvent();
     });
-
-
-
 
   }
 
