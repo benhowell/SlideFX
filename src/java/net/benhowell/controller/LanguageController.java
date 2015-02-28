@@ -50,10 +50,6 @@ import java.util.*;
 
 public class LanguageController extends ScreenController implements Initializable {
 
-  /*@FXML private GridPane gridPane;
-  @FXML public Button nextButton;
-  @FXML public Button prevButton;*/
-
   @FXML private TableView<LangControllerRow> languageTableView;
   @FXML private TableColumn<LangControllerRow, String> languageColumn;
   @FXML private TableColumn<LangControllerRow, String> fluencyColumn;
@@ -61,25 +57,12 @@ public class LanguageController extends ScreenController implements Initializabl
   @FXML private ComboBox<String> languageComboBox;
   @FXML private ComboBox<String> fluencyComboBox;
   @FXML private Button addButton;
-
   private Node child;
 
   private ObservableList<LangControllerRow> data;
 
   public LanguageController(ControllerLoader loader, Display display, Store store){
-    super(loader, "Screen.fxml", display);
-
-    try {
-      child = loader.controllerLoader(this, "LanguageGridPane.fxml");
-    }
-    catch (IOException e) {
-      System.out.println("Controller loader failed to load view: " + e);
-    }
-    GridPane.setRowIndex(child, 0);
-    gridPane.getChildren().add(0, child);
-
-
-
+    super(loader, "LanguageGridPane.fxml", display);
 
     List<String> langList = Util.listFromResource("/iso639-1.txt");
 
@@ -122,7 +105,6 @@ public class LanguageController extends ScreenController implements Initializabl
 
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
-    //this.nextButton.setOnAction(e -> triggerNextButtonEvent());
     this.nextButton.setOnAction(e -> {
         store.addLanguage(getResult());
       triggerNextButtonEvent();
