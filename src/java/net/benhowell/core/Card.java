@@ -46,11 +46,9 @@ public class Card {
     items = c;
   }
 
-
   public void load(){
     controller.load(items);
   }
-
 
   public void update(){
     controller.update(items);
