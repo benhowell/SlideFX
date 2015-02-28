@@ -36,6 +36,11 @@ public class Card {
   private ScreenController controller;
   private Config items;
 
+  public Card(ScreenController sc){
+    controller = sc;
+    items = null;
+  }
+
   public Card(Config c, ScreenController sc){
     controller = sc;
     items = c;

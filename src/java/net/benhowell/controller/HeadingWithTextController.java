@@ -127,7 +127,6 @@ public class HeadingWithTextController extends ScreenController implements Initi
     gridPane.getRowConstraints().addAll(r1, r2, r3, r4, r5);
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
-
     this.nextButton.setOnAction(e -> triggerNextButtonEvent());
   }
 

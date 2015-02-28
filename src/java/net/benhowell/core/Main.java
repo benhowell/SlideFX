@@ -56,6 +56,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   // init controllers
   HeadingWithTextController headingWithTextController = new HeadingWithTextController(loader, "Screen.fxml", display);
   PictureWithTextAndTextBoxController pictureWithTextAndTextBoxController = new PictureWithTextAndTextBoxController(loader, "Screen.fxml", display, store);
+  DetailController detailController = new DetailController(loader, "Screen.fxml", display, store);
   /*
   DetailController detailController = new DetailController(loader, "PersonalDetailGridPane.fxml", display);
   LanguageController languageController = new LanguageController(loader, "LanguageGridPane.fxml", display);
@@ -65,12 +66,19 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
 
   DoublyLinkedList<Card> cards;
-  DLLNode<Card> card;
+  Node<Card> card;
 
 
 
   public static void main(String[] args) {
     launch(args);
+  }
+
+
+  public static ArrayList<Card> load(ScreenController sc){
+    ArrayList<Card> cards = new ArrayList<>();
+    cards.add(new Card(sc));
+    return cards;
   }
 
 
@@ -88,9 +96,9 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
       .stream()
       .forEach(c -> {
         String category = c.getString("category");
-        List<String> names = Util.shuffle(config.getStringList("names"));
+        List<String> names = Util.shuffle(c.getStringList("names"));
         ArrayList<Map<String,String>> trials = new ArrayList<>();
-        Util.shuffle(config.getConfigList("trials"))
+        Util.shuffle(c.getConfigList("trials"))
           .stream()
           .forEach(t -> {
             Config trialConfig = (Config) t;
@@ -120,17 +128,17 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
   @Override
   public void handlePrevButtonEvent(ButtonEvent event) {
-    if (cards.hasPrevious(card)) {
-      card = cards.getPrevious(card);
-      card.getElement().update();
+    if(card.hasPrevious()){
+      card = card.previous();
+      card.element().update();
     }
   }
 
   @Override
   public void handleNextButtonEvent(ButtonEvent event) {
-    if (cards.hasNext(card)) {
-      card = cards.getNext(card);
-      card.getElement().update();
+    if (card.hasNext()) {
+      card = card.next();
+      card.element().update();
     }
   }
 
@@ -152,16 +160,19 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     headingWithTextController.addEventListener((NextButtonEventListener)this);
     pictureWithTextAndTextBoxController.addEventListener((PrevButtonEventListener)this);
     pictureWithTextAndTextBoxController.addEventListener((NextButtonEventListener)this);
+    detailController.addEventListener((PrevButtonEventListener)this);
+    detailController.addEventListener((NextButtonEventListener) this);
 
     // load cards
     cards.addAll(load(config, headingWithTextController, "experiment.intro"));
     cards.addAll(load(config, pictureWithTextAndTextBoxController, "experiment.examples"));
     cards.addAll(load(config, headingWithTextController, "experiment.interlude"));
     cards.addAll(loadRandomised(config, pictureWithTextAndTextBoxController, "experiment.blocks"));
-    // cards.add(details)
+    cards.addAll(load(detailController));
     // cards.add(languages)
     //cards.addAll(load(config, ?, "experiment.outro"));
 
+    System.out.println("cards: " + cards.toString());
     // get first card node
     card = cards.getFirst();
 
@@ -315,7 +326,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
 
   public void start(Stage primaryStage) {
-    card.getElement().load();
+    card.element().load();
     init(primaryStage, config.getString("experiment.title"));
     primaryStage.show();
   }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Ben Howell
+ * Copyright (c) 2014 Ben Howell
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,10 @@
  * SOFTWARE.
  */
 
+
 package net.benhowell.controller;
 
-import com.typesafe.config.Config;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,7 +35,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import net.benhowell.core.Display;
-import net.benhowell.core.Store;
 import net.benhowell.core.Util;
 
 import java.io.IOException;
@@ -43,45 +43,34 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/**
- * Created by Ben Howell [ben@benhowell.net] on 28-Feb-2015.
- */
-public class DetailController extends ScreenController implements Initializable {
 
-  //@FXML
-  private GridPane detailGridPane;
-  //@FXML public Button nextButton = null;
-  //@FXML public Button prevButton = null;
-  //@FXML
-  private ComboBox<String> sexComboBox = null;
-  //@FXML
-  private ComboBox<Integer> ageComboBox = null;
-  //@FXML
-  private ComboBox<Integer> yearComboBox = null;
-  //@FXML
-  private ComboBox<Integer> monthComboBox = null;
-  //@FXML
-  private ComboBox<String> firstLanguageComboBox = null;
+/**
+ * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
+ */
+public class PersonalDetailController implements Initializable{
+
+  @FXML private GridPane detailGridPane = null;
+  @FXML public Button nextButton = null;
+  @FXML public Button prevButton = null;
+  @FXML private ComboBox<String> sexComboBox = null;
+  @FXML private ComboBox<Integer> ageComboBox = null;
+  @FXML private ComboBox<Integer> yearComboBox = null;
+  @FXML private ComboBox<Integer> monthComboBox = null;
+  @FXML private ComboBox<String> firstLanguageComboBox = null;
   private String resource;
 
   private Display display;
-  private Node childNode;
+  private Node node;
 
-  public DetailController(ControllerLoader loader, String resource, Display display, Store store){
-    super(loader, resource, display);
-
-    //this.resource = "Detail.fxml";
-    //this.display = display;
-    /*try {
-      childNode = loader.controllerLoader(this, "Detail.fxml");
+  public PersonalDetailController(ControllerLoader loader, String resource, Display display){
+    this.resource = resource;
+    this.display = display;
+    try {
+      node = loader.controllerLoader(this, resource);
     }
     catch (IOException e) {
       System.out.println("Controller loader failed to load view: " + e);
     }
-
-    gridPane.getChildren().add(childNode);*/
-    this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
-    this.nextButton.setOnAction(e -> triggerNextButtonEvent());
   }
 
   public Map<String, String> getResult(){
@@ -94,10 +83,11 @@ public class DetailController extends ScreenController implements Initializable 
     return m;
   }
 
-  public void update(Config items) {
-    super.update(() -> {
+  public void load() {
+    display.fxRun( () -> {
+      display.loadScreen(node);
       nextButton.requestFocus();
-    });
+    } );
   }
 
   public void initialize(URL url, ResourceBundle rb) {
@@ -130,9 +120,9 @@ public class DetailController extends ScreenController implements Initializable 
     List<String> langList = Util.listFromResource("/iso639-1.txt");
 
     List<String> fluencyList = new ArrayList<>();
-    fluencyList.add("Fluent");
-    fluencyList.add("Semi-fluent");
-    fluencyList.add("Basic");
+      fluencyList.add("Fluent");
+      fluencyList.add("Semi-fluent");
+      fluencyList.add("Basic");
 
     firstLanguageComboBox.getItems().addAll(FXCollections.observableList(langList));
     firstLanguageComboBox.setValue("English");
