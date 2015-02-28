@@ -25,22 +25,16 @@
 package net.benhowell.controller;
 
 import com.typesafe.config.Config;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
 import net.benhowell.core.Display;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -48,14 +42,25 @@ import java.util.ResourceBundle;
  */
 public class HeadingWithTextController extends ScreenController implements Initializable {
 
-  private TextArea bodyTextArea;
-  private Label headingLabel;
+  @FXML private TextArea bodyTextArea;
+  @FXML private Label headingLabel;
+  private Node child;
 
 
-  public HeadingWithTextController(ControllerLoader loader, String resource, Display display) {
-    super(loader, resource, display);
+  public HeadingWithTextController(ControllerLoader loader, Display display) {
+    super(loader, "Screen.fxml", display);
 
-    headingLabel = new Label();
+    try {
+      child = loader.controllerLoader(this, "HeadingWithText.fxml");
+    }
+    catch (IOException e) {
+      System.out.println("Controller loader failed to load view: " + e);
+    }
+
+    GridPane.setRowIndex(child, 0);
+    gridPane.getChildren().add(0, child);
+
+    /*headingLabel = new Label();
     headingLabel.setPrefWidth(800.0);
     headingLabel.setPrefHeight(-1.0);
     headingLabel.setMaxHeight(-1.0);
@@ -124,7 +129,7 @@ public class HeadingWithTextController extends ScreenController implements Initi
     r5.setPrefHeight(33.0);
     r5.setVgrow(Priority.NEVER);
 
-    gridPane.getRowConstraints().addAll(r1, r2, r3, r4, r5);
+    gridPane.getRowConstraints().addAll(r1, r2, r3, r4, r5);*/
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> triggerNextButtonEvent());
@@ -132,7 +137,7 @@ public class HeadingWithTextController extends ScreenController implements Initi
 
 
   public void load(Config items) {
-    System.out.println(headingLabel.getText());
+    //System.out.println(headingLabel.getText());
     headingLabel.setText(items.getString("label"));
     bodyTextArea.setText(items.getString("text"));
     super.load();
