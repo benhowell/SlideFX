@@ -40,14 +40,6 @@ import java.util.Map;
 public class Store {
 
   HashMap<String, Config> results = new HashMap<>();
-  Map<String, String> detail;
-  Map<String, String> language;
-
-
-
-  public Config getTrial(String id){
-    return results.get("id");
-  }
 
   public void addTrial(Config trial, String result){
     Config newConfig = trial.withValue("result",  ConfigValueFactory.fromAnyRef(result));
@@ -64,9 +56,11 @@ public class Store {
     System.out.println(" presented text: " + txt);
     System.out.println(" result: " + result);
     System.out.println("-------------------------\n");
-
     results.put(newConfig.getString("id"), newConfig);
+  }
 
+  public Config getTrial(String id){
+    return results.remove(id);
   }
 
   public void addDetail(Map<String, String> result){
@@ -78,7 +72,11 @@ public class Store {
     System.out.println(" monthsInAustralia: " + result.get("monthsInAustralia"));
     System.out.println(" firstLanguage: " + result.get("firstLanguage"));
     System.out.println("-------------------------\n");
-    detail = result;
+    results.put("detail", ConfigValueFactory.fromMap(result).toConfig());
+  }
+
+  public Config getDetail(){
+    return results.remove("detail");
   }
 
   public void addLanguage(Map<String, String> result){
@@ -88,7 +86,12 @@ public class Store {
       System.out.println(" " + entry.getKey() + ": " + entry.getValue());
     }
     System.out.println("-------------------------\n");
-    language = result;
+    results.put("languages", ConfigValueFactory.fromMap(result).toConfig());
+
+  }
+
+  public Config getLanguage(){
+    return results.remove("languages");
   }
 
   public String generateCSV(){
