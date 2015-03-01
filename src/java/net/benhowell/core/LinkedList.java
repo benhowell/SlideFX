@@ -76,13 +76,13 @@ class Node<T> {
 }
 
 
-public class DoublyLinkedList<T> {
+public class LinkedList<T> {
 
   private Node<T> head;
   private Node<T> tail;
   private int size;
 
-  public DoublyLinkedList(){
+  public LinkedList(){
     head = new Node<>(null, null, null);
     tail = new Node<>(null, null, null);
     size = 0;
