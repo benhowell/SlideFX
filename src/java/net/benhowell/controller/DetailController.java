@@ -54,9 +54,12 @@ public class DetailController extends ScreenController implements Initializable 
   @FXML private ComboBox<Integer> monthComboBox;
   @FXML private ComboBox<String> firstLanguageComboBox;
 
+  private Store store;
+
   public DetailController(Display display, Store store){
     super("Detail.fxml", display);
 
+    this.store = store;
 
 
 
@@ -120,6 +123,19 @@ public class DetailController extends ScreenController implements Initializable 
 
   public void update(Config items) {
     super.update(() -> {
+
+      Config config = store.getDetail();
+      if(config != null) {
+        sexComboBox.setValue(config.getString("sex"));
+        ageComboBox.setValue(Integer.parseInt(config.getString("age")));
+        yearComboBox.setValue(Integer.parseInt(config.getString("yearsInAustralia")));
+        monthComboBox.setValue(Integer.parseInt(config.getString("monthsInAustralia")));
+        firstLanguageComboBox.setValue(config.getString("firstLanguage"));
+      }
+      else{
+        System.out.println(" no language item in store");
+      }
+
       nextButton.requestFocus();
     });
   }
