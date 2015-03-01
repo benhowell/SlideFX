@@ -26,6 +26,7 @@ package net.benhowell.controller;
 
 
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValue;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,10 +59,14 @@ public class LanguageController extends ScreenController implements Initializabl
   @FXML private ComboBox<String> fluencyComboBox;
   @FXML private Button addButton;
 
+  private Store store;
+
   private ObservableList<LangControllerRow> data;
 
   public LanguageController(Display display, Store store){
     super("LanguageGridPane.fxml", display);
+
+    this.store = store;
 
     List<String> langList = Util.listFromResource("/iso639-1.txt");
 
@@ -115,7 +120,6 @@ public class LanguageController extends ScreenController implements Initializabl
   }
 
   public void update(Config items) {
-    System.out.println("language!!!");
     super.update(() -> {
       nextButton.requestFocus();
     });
