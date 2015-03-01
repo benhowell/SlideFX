@@ -49,10 +49,6 @@ import java.util.ResourceBundle;
 /**
  * Created by Ben Howell [ben@benhowell.net] on 23-Feb-2015.
  */
-
-/**
- * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
- */
 public class ImgTextTextBoxController extends ScreenController implements Initializable {
 
   private Store store;
@@ -123,8 +119,9 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
       }
       else { // config item is a trial
         Config trial = store.getTrial(config.getString("id"));
-        if(trial != null)
+        if(trial != null) {
           textField.setText(trial.getString("result"));
+        }
         textField.setEditable(true);
         textField.requestFocus();
       }
