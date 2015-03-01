@@ -29,15 +29,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;
+
 import net.benhowell.core.Display;
 import net.benhowell.core.Store;
 import net.benhowell.core.Util;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,8 +58,6 @@ public class DetailController extends ScreenController implements Initializable 
 
     this.store = store;
 
-
-
     sexComboBox.getItems().addAll(
         "Female",
         "Male",
@@ -73,7 +68,6 @@ public class DetailController extends ScreenController implements Initializable 
     ObservableList<Integer> yearList  = FXCollections.observableList(
         IntStream.range(0, 100).boxed().collect(Collectors.toList())
     );
-
 
     ageComboBox.setItems(yearList);
     ageComboBox.setValue(20);
@@ -96,8 +90,6 @@ public class DetailController extends ScreenController implements Initializable 
 
     firstLanguageComboBox.getItems().addAll(FXCollections.observableList(langList));
     firstLanguageComboBox.setValue("English");
-
-
 
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
@@ -123,7 +115,6 @@ public class DetailController extends ScreenController implements Initializable 
 
   public void update(Config items) {
     super.update(() -> {
-
       Config config = store.getDetail();
       if(config != null) {
         sexComboBox.setValue(config.getString("sex"));
@@ -132,19 +123,11 @@ public class DetailController extends ScreenController implements Initializable 
         monthComboBox.setValue(Integer.parseInt(config.getString("monthsInAustralia")));
         firstLanguageComboBox.setValue(config.getString("firstLanguage"));
       }
-      else{
-        System.out.println(" no language item in store");
-      }
-
       nextButton.requestFocus();
     });
   }
 
   public void initialize(URL url, ResourceBundle rb) {
     System.out.println(this.getClass().getSimpleName() + ".initialise");
-
-
   }
-
-
 }
