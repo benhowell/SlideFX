@@ -53,7 +53,6 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   Stage stage = null;
   Config config;
   Display display = new Display();
-
   Store store = new Store();
 
   // init controllers
@@ -70,7 +69,6 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   public void init(){
     config = ConfigFactory.load();
     cards = new LinkedList<>();
-
 
     headingWithTextController.addEventListener((PrevButtonEventListener)this);
     headingWithTextController.addEventListener((NextButtonEventListener)this);
