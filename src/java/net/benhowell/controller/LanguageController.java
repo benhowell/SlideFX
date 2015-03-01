@@ -57,7 +57,6 @@ public class LanguageController extends ScreenController implements Initializabl
   @FXML private ComboBox<String> languageComboBox;
   @FXML private ComboBox<String> fluencyComboBox;
   @FXML private Button addButton;
-  private Node child;
 
   private ObservableList<LangControllerRow> data;
 

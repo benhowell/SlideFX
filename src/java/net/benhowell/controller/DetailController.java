@@ -53,7 +53,6 @@ public class DetailController extends ScreenController implements Initializable 
   @FXML private ComboBox<Integer> yearComboBox;
   @FXML private ComboBox<Integer> monthComboBox;
   @FXML private ComboBox<String> firstLanguageComboBox;
-  private Node child;
 
   public DetailController(Display display, Store store){
     super("Detail.fxml", display);

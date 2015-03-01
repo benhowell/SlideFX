@@ -64,7 +64,6 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
   private Label validationLabel;
   @FXML private HBox hBox;
 
-  private Node child;
 
   public ImgTextTextBoxController(Display display, Store store){
     super("ImgTextTextBox.fxml", display);

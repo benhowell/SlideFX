@@ -44,7 +44,6 @@ public class HeadingWithTextController extends ScreenController implements Initi
 
   @FXML private TextArea bodyTextArea;
   @FXML private Label headingLabel;
-  private Node child;
 
   public HeadingWithTextController(Display display) {
     super("HeadingWithText.fxml", display);
@@ -55,7 +54,6 @@ public class HeadingWithTextController extends ScreenController implements Initi
 
 
   public void load(Config items) {
-    //System.out.println(headingLabel.getText());
     headingLabel.setText(items.getString("label"));
     bodyTextArea.setText(items.getString("text"));
     super.load();
