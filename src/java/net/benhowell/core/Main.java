@@ -47,7 +47,7 @@ import java.util.*;
  */
 public class Main extends Application implements PrevButtonEventListener, NextButtonEventListener {
 
-  DoublyLinkedList<Card> cards;
+  LinkedList<Card> cards;
   Node<Card> card;
 
   Stage stage = null;
@@ -69,7 +69,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
   public void init(){
     config = ConfigFactory.load();
-    cards = new DoublyLinkedList<>();
+    cards = new LinkedList<>();
 
 
     headingWithTextController.addEventListener((PrevButtonEventListener)this);
