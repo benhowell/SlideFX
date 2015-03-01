@@ -66,75 +66,6 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     launch(args);
   }
 
-  public static ArrayList<Card> load(ScreenController sc){
-    ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(sc));
-    return cards;
-  }
-
-  public static ArrayList<Card> load(Config config, ScreenController sc, String item){
-    ArrayList<Card> cards = new ArrayList<>();
-    config.getConfigList(item)
-      .stream()
-      .forEach(c -> cards.add(new Card(c, sc)));
-    return cards;
-  }
-
-  public ArrayList<Card> loadRandomised(Config config, ScreenController sc, String item){
-    ArrayList<Card> cards = new ArrayList<>();
-    config.getConfigList(item)
-      .stream()
-      .forEach(c -> {
-        String category = c.getString("category");
-        List<String> names = Util.shuffle(c.getStringList("names"));
-        ArrayList<Map<String,String>> trials = new ArrayList<>();
-        Util.shuffle(c.getConfigList("trials"))
-          .stream()
-          .forEach(t -> {
-            Config trialConfig = (Config) t;
-            HashMap<String, String> m = new HashMap<>();
-            m.put("id", trialConfig.getString("id"));
-            m.put("type", trialConfig.getString("type"));
-            m.put("image", trialConfig.getString("image"));
-            m.put("text", trialConfig.getString("text"));
-            m.put("name", trialConfig.getString("name"));
-            if (trialConfig.hasPath("example")) { // config item is an example
-              m.put("example", trialConfig.getString("example"));
-            }
-            trials.add(m);
-          });
-
-        for(int i=0;i<trials.size();i++){
-          trials.get(i).put("name", names.get(i));
-          trials.get(i).put("category", category);
-          cards.add(new Card(ConfigFactory.parseMap(trials.get(i)), sc));
-        }
-      });
-
-    if(config.getBoolean("experiment.randomiseCategoryPresentation"))
-      return Util.shuffle(cards);
-    return cards;
-  }
-
-  @Override
-  public void handlePrevButtonEvent(ButtonEvent event) {
-    if(card.hasPrevious()){
-      card = card.previous();
-      card.element().update();
-    }
-  }
-
-  @Override
-  public void handleNextButtonEvent(ButtonEvent event) {
-    if (card.hasNext()) {
-      card = card.next();
-      card.element().update();
-    }
-    else{
-      endExercise();
-    }
-  }
-
 
   public void init(){
     config = ConfigFactory.load();
@@ -154,9 +85,9 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     cards.addAll(load(config, headingWithTextController, "experiment.intro"));
     cards.addAll(load(config, imgTextTextBoxController, "experiment.examples"));
     cards.addAll(load(config, headingWithTextController, "experiment.interlude"));
-    cards.addAll(loadRandomised(config, imgTextTextBoxController, "experiment.blocks"));
-    cards.addAll(load(detailController));
-    cards.addAll(load(languageController));
+    cards.addAll(loadRandomisedTrial(config, imgTextTextBoxController, "experiment.blocks"));
+    cards.add(new Card(detailController));
+    cards.add(new Card(languageController));
     cards.addAll(load(config, headingWithTextController, "experiment.outro"));
 
     System.out.println("cards: " + cards.toString());
@@ -170,6 +101,26 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     card.element().load();
     init(primaryStage, config.getString("experiment.title"));
     primaryStage.show();
+  }
+
+
+  @Override
+  public void handlePrevButtonEvent(ButtonEvent event) {
+    if(card.hasPrevious()){
+      card = card.previous();
+      card.element().update();
+    }
+  }
+
+  @Override
+  public void handleNextButtonEvent(ButtonEvent event) {
+    if (card.hasNext()) {
+      card = card.next();
+      card.element().update();
+    }
+    else{
+      endExercise();
+    }
   }
 
   public void endExercise(){
@@ -201,32 +152,77 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     }
 
   }
-    public void stop(){
+
+  public void stop(){
       stage.close();
     }
 
 
-    public void init(Stage primaryStage, String title) {
-      stage = primaryStage;
-      Group root = new Group();
-      root.getChildren().addAll(display);
-      primaryStage.setTitle(title);
-      primaryStage.centerOnScreen();
-      primaryStage.setScene(new Scene(root, 800, 600));
-      primaryStage.sizeToScene();
-      //setMaximised(primaryStage)
-    }
-
-
-    public void setMaximised(Stage stage){
-      Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-      stage.setX(bounds.getMinX());
-      stage.setY(bounds.getMinY());
-      stage.setWidth(bounds.getWidth());
-      stage.setHeight(bounds.getHeight());
-
-    }
+  public void init(Stage primaryStage, String title) {
+    stage = primaryStage;
+    Group root = new Group();
+    root.getChildren().addAll(display);
+    primaryStage.setTitle(title);
+    primaryStage.centerOnScreen();
+    primaryStage.setScene(new Scene(root, 800, 600));
+    primaryStage.sizeToScene();
+    //setMaximised(primaryStage)
   }
+
+
+  public void setMaximised(Stage stage){
+    Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+    stage.setX(bounds.getMinX());
+    stage.setY(bounds.getMinY());
+    stage.setWidth(bounds.getWidth());
+    stage.setHeight(bounds.getHeight());
+
+  }
+
+  public static ArrayList<Card> load(Config config, ScreenController sc, String item){
+    ArrayList<Card> cards = new ArrayList<>();
+    config.getConfigList(item)
+        .stream()
+        .forEach(c -> cards.add(new Card(c, sc)));
+    return cards;
+  }
+
+  public ArrayList<Card> loadRandomisedTrial(Config config, ScreenController sc, String item){
+    ArrayList<Card> cards = new ArrayList<>();
+    config.getConfigList(item)
+        .stream()
+        .forEach(c -> {
+          String category = c.getString("category");
+          List<String> names = Util.shuffle(c.getStringList("names"));
+          ArrayList<Map<String,String>> trials = new ArrayList<>();
+          Util.shuffle(c.getConfigList("trials"))
+              .stream()
+              .forEach(t -> {
+                Config trialConfig = (Config) t;
+                HashMap<String, String> m = new HashMap<>();
+                m.put("id", trialConfig.getString("id"));
+                m.put("type", trialConfig.getString("type"));
+                m.put("image", trialConfig.getString("image"));
+                m.put("text", trialConfig.getString("text"));
+                m.put("name", trialConfig.getString("name"));
+                if (trialConfig.hasPath("example")) { // config item is an example
+                  m.put("example", trialConfig.getString("example"));
+                }
+                trials.add(m);
+              });
+
+          for(int i=0;i<trials.size();i++){
+            trials.get(i).put("name", names.get(i));
+            trials.get(i).put("category", category);
+            cards.add(new Card(ConfigFactory.parseMap(trials.get(i)), sc));
+          }
+        });
+
+    if(config.getBoolean("experiment.randomiseCategoryPresentation"))
+      return Util.shuffle(cards);
+    return cards;
+  }
+}
 
 
 
