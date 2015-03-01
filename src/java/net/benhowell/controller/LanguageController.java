@@ -48,7 +48,6 @@ import java.util.*;
 /**
  * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
  */
-
 public class LanguageController extends ScreenController implements Initializable {
 
   @FXML private TableView<LangControllerRow> languageTableView;
