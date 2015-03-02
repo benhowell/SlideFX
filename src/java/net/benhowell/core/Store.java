@@ -94,17 +94,64 @@ public class Store {
     return results.remove("languages");
   }
 
-  public String generateCSV(){
-    StringBuilder stringBuilder = new StringBuilder();
+  public String generateCSV() {
+    StringBuilder sb = new StringBuilder();
+    char sep = ';';
 
-    stringBuilder.append("FIXME");
-    stringBuilder.append(',');
-    stringBuilder.append('\n');
 
-    stringBuilder.append("FIXME");
-    stringBuilder.append(',');
-    stringBuilder.append('\n');
-    return stringBuilder.toString();
+    sb.append("sex" + sep + "age" + sep + "years in Australia" + sep + "months in Australia" + sep + "first language");
+    sb.append('\n');
+
+    sb.append(results.get("detail").getString("sex"));
+    sb.append(sep);
+    sb.append(results.get("detail").getString("age"));
+    sb.append(sep);
+    sb.append(results.get("detail").getString("yearsInAustralia"));
+    sb.append(sep);
+    sb.append(results.get("detail").getString("monthsInAustralia"));
+    sb.append(sep);
+    sb.append(results.get("detail").getString("firstLanguage"));
+    sb.append('\n');
+    sb.append('\n');
+
+
+
+    sb.append("language" + sep + "fluency");
+    sb.append('\n');
+    results.get("languages").entrySet()
+        .stream()
+        .forEach(e -> {
+          sb.append(e.getKey().toString());
+          sb.append(sep);
+          sb.append(e.getValue().unwrapped().toString());
+          sb.append('\n');
+        });
+    sb.append('\n');
+
+
+    sb.append("trial_id" + sep + "category" + sep + "type" + sep + "image" + sep + "text" + sep + "name" + sep + "result");
+    sb.append('\n');
+
+    results.entrySet()
+      .stream()
+      .forEach(e -> {
+        if (e.getKey().startsWith("trial")) {
+          sb.append(e.getValue().getString("id"));
+          sb.append(sep);
+          sb.append(e.getValue().getString("category"));
+          sb.append(sep);
+          sb.append(e.getValue().getString("type"));
+          sb.append(sep);
+          sb.append(e.getValue().getString("image"));
+          sb.append(sep);
+          sb.append(e.getValue().getString("text"));
+          sb.append(sep);
+          sb.append(e.getValue().getString("name"));
+          sb.append(sep);
+          sb.append(e.getValue().getString("result"));
+          sb.append('\n');
+        }
+      });
+    return sb.toString();
   }
-
 }
