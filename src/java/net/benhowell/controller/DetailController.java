@@ -53,8 +53,8 @@ public class DetailController extends ScreenController implements Initializable 
 
   private Store store;
 
-  public DetailController(Display display, Store store){
-    super("Detail.fxml", display);
+  public DetailController(Object parent, Display display, Store store){
+    super(parent, "Detail.fxml", display);
 
     this.store = store;
 

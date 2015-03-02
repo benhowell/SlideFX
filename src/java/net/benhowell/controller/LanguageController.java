@@ -62,8 +62,8 @@ public class LanguageController extends ScreenController implements Initializabl
 
   private ObservableList<LangControllerRow> data;
 
-  public LanguageController(Display display, Store store){
-    super("LanguageGridPane.fxml", display);
+  public LanguageController(Object parent, Display display, Store store){
+    super(parent, "LanguageGridPane.fxml", display);
 
     this.store = store;
 

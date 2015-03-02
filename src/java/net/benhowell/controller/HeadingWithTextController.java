@@ -32,6 +32,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import net.benhowell.core.Display;
+import net.benhowell.core.NextButtonEventListener;
+import net.benhowell.core.PrevButtonEventListener;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,8 +47,10 @@ public class HeadingWithTextController extends ScreenController implements Initi
   @FXML private TextArea bodyTextArea;
   @FXML private Label headingLabel;
 
-  public HeadingWithTextController(Display display) {
-    super("HeadingWithText.fxml", display);
+  public HeadingWithTextController(Object parent, Display display) {
+    super(parent, "HeadingWithText.fxml", display);
+
+
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> triggerNextButtonEvent());

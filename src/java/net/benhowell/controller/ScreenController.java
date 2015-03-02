@@ -56,11 +56,14 @@ public class ScreenController {
 
   ControllerLoader loader = new ControllerLoader();
 
-  public ScreenController(String resource, Display display) {
+  public ScreenController(Object parent, String resource, Display display) {
     this.display = display;
 
     this.prevButtonEventListeners = new CopyOnWriteArrayList<>();
     this.nextButtonEventListeners = new CopyOnWriteArrayList<>();
+
+    this.addEventListener((PrevButtonEventListener)parent);
+    this.addEventListener((NextButtonEventListener)parent);
 
     // load screen shell...
     this.node = loadView("Screen.fxml");

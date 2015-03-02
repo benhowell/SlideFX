@@ -61,8 +61,8 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
   @FXML private HBox hBox;
 
 
-  public ImgTextTextBoxController(Display display, Store store){
-    super("ImgTextTextBox.fxml", display);
+  public ImgTextTextBoxController(Object parent, Display display, Store store){
+    super(parent, "ImgTextTextBox.fxml", display);
 
     this.store = store;
 
