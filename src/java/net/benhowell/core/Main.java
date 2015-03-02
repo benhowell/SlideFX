@@ -31,6 +31,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -56,10 +57,10 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   Store store = new Store();
 
   // init controllers
-  HeadingWithTextController headingWithTextController = new HeadingWithTextController(display);
-  ImgTextTextBoxController imgTextTextBoxController = new ImgTextTextBoxController(display, store);
-  DetailController detailController = new DetailController(display, store);
-  LanguageController languageController = new LanguageController(display, store);
+  HeadingWithTextController headingWithTextController = new HeadingWithTextController(this, display);
+  ImgTextTextBoxController imgTextTextBoxController = new ImgTextTextBoxController(this, display, store);
+  DetailController detailController = new DetailController(this, display, store);
+  LanguageController languageController = new LanguageController(this, display, store);
 
   public static void main(String[] args) {
     launch(args);
@@ -70,15 +71,6 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     config = ConfigFactory.load();
     cards = new LinkedList<>();
 
-    headingWithTextController.addEventListener((PrevButtonEventListener)this);
-    headingWithTextController.addEventListener((NextButtonEventListener)this);
-    imgTextTextBoxController.addEventListener((PrevButtonEventListener)this);
-    imgTextTextBoxController.addEventListener((NextButtonEventListener)this);
-    detailController.addEventListener((PrevButtonEventListener)this);
-    detailController.addEventListener((NextButtonEventListener) this);
-    languageController.addEventListener((PrevButtonEventListener)this);
-    languageController.addEventListener((NextButtonEventListener) this);
-
     // load cards
     cards.addAll(load(config, headingWithTextController, "experiment.intro"));
     cards.addAll(load(config, imgTextTextBoxController, "experiment.examples"));
@@ -88,10 +80,8 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     cards.add(new Card(languageController));
     cards.addAll(load(config, headingWithTextController, "experiment.outro"));
 
-    System.out.println("cards: " + cards.toString());
     // get first card node
     card = cards.getFirst();
-
   }
 
 
