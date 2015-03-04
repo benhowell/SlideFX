@@ -109,7 +109,7 @@ public class LanguageController extends ScreenController implements Initializabl
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> {
-        store.addLanguage(getResult());
+        store.addLanguages(getResult());
       triggerNextButtonEvent();
     });
   }

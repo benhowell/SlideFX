@@ -86,7 +86,11 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
     });
 
 
-    this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
+    this.prevButton.setOnAction(e -> {
+      if(!config.hasPath("example") && getResult() != null)
+        store.addTrial(config, getResult());
+      triggerPrevButtonEvent();
+    });
 
     this.nextButton.setOnAction(e -> {
       if(!config.hasPath("example"))

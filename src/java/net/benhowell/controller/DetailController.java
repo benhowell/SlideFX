@@ -94,7 +94,7 @@ public class DetailController extends ScreenController implements Initializable 
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> {
-      store.addDetail(getResult());
+      store.addDetails(getResult());
       triggerNextButtonEvent();
     });
   }
@@ -115,7 +115,7 @@ public class DetailController extends ScreenController implements Initializable 
 
   public void update(Config items) {
     super.update(() -> {
-      Config config = store.getDetail();
+      Config config = store.getDetails();
       if(config != null) {
         sexComboBox.setValue(config.getString("sex"));
         ageComboBox.setValue(Integer.parseInt(config.getString("age")));
