@@ -36,8 +36,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import net.benhowell.controller.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.time.Instant;
 import java.io.IOException;
@@ -112,33 +117,19 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   }
 
   public void endExercise(){
-    System.out.println("Create spreadsheet");
-    System.out.println("prompt user with save dialog?");
+    System.out.println("prompt user with save dialog...");
 
     Instant now = Instant.now();
 
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save Survey");
     fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-    fileChooser.setInitialFileName(now.toString() + ".csv");
+    fileChooser.setInitialFileName(now.toString() + ".xlsx");
     File file = fileChooser.showSaveDialog(stage);
     if(file != null) {
-      writeFile(store.generateCSV(), file);
+      store.generateXlsx(file);
     }
     stop();
-  }
-
-  private void writeFile(String content, File file){
-    try {
-      FileWriter fileWriter = new FileWriter(file);
-      fileWriter.write(content);
-      fileWriter.flush();
-      fileWriter.close();
-    }
-    catch (IOException e) {
-      System.out.println("IOException: " + e);
-    }
-
   }
 
   public void stop(){
