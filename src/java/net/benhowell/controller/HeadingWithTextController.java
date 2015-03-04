@@ -54,6 +54,7 @@ public class HeadingWithTextController extends ScreenController implements Initi
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> triggerNextButtonEvent());
+
   }
 
 

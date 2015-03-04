@@ -27,6 +27,7 @@ package net.benhowell.controller;
 import com.typesafe.config.Config;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -36,13 +37,15 @@ import net.benhowell.core.Display;
 import net.benhowell.core.PrevButtonEventListener;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
  */
-public class ScreenController {
+public class ScreenController implements Initializable {
 
   @FXML protected GridPane gridPane;
   @FXML public Button nextButton;
@@ -72,6 +75,10 @@ public class ScreenController {
     this.child = loadView(resource);
     GridPane.setRowIndex(child, 0);
     gridPane.getChildren().add(0, child);
+
+    this.prevButton.defaultButtonProperty().bind(prevButton.focusedProperty());
+    this.nextButton.defaultButtonProperty().bind(nextButton.focusedProperty());
+
   }
 
   public void load(Config c){}
@@ -149,5 +156,9 @@ public class ScreenController {
       System.out.println("Controller loader failed to load view: " + e);
     }
     return n;
+  }
+
+  public void initialize(URL url, ResourceBundle rb) {
+    System.out.println(this.getClass().getSimpleName() + ".initialise");
   }
 }
