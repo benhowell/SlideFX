@@ -25,7 +25,6 @@
 
 package net.benhowell.core;
 
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 

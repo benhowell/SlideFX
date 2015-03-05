@@ -25,7 +25,6 @@
 package net.benhowell.core;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValue;
 
 import java.util.*;
 

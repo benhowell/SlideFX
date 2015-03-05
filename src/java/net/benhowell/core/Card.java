@@ -25,7 +25,6 @@
 package net.benhowell.core;
 
 import com.typesafe.config.Config;
-import net.benhowell.controller.HeadingWithTextController;
 import net.benhowell.controller.ScreenController;
 
 /**
