@@ -30,7 +30,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-
 import net.benhowell.core.Display;
 import net.benhowell.core.Store;
 import net.benhowell.core.Util;

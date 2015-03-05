@@ -27,15 +27,10 @@ package net.benhowell.controller;
 import com.typesafe.config.Config;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 import net.benhowell.core.Display;
-import net.benhowell.core.NextButtonEventListener;
-import net.benhowell.core.PrevButtonEventListener;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

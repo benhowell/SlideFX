@@ -26,21 +26,17 @@ package net.benhowell.controller;
 
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValue;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import net.benhowell.core.Display;
 import net.benhowell.core.Store;
 import net.benhowell.core.Util;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 

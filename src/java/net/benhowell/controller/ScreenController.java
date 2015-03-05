@@ -32,8 +32,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import net.benhowell.core.ButtonEvent;
-import net.benhowell.core.NextButtonEventListener;
 import net.benhowell.core.Display;
+import net.benhowell.core.NextButtonEventListener;
 import net.benhowell.core.PrevButtonEventListener;
 
 import java.io.IOException;
