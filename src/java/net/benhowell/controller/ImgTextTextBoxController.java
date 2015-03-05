@@ -25,24 +25,16 @@
 package net.benhowell.controller;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.HBox;
 import net.benhowell.core.Display;
 import net.benhowell.core.Store;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -57,7 +49,7 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
   @FXML private Label label;
   @FXML private TextField textField;
   //@FXML private BorderPane borderPane;
-  private Label validationLabel;
+  @FXML private Label validationLabel;
   @FXML private HBox hBox;
 
 
@@ -66,15 +58,10 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
 
     this.store = store;
 
-    validationLabel = new Label();
-    validationLabel.setPrefHeight(30.0);
-    validationLabel.setPrefWidth(568.0000999999975);
     validationLabel.setText("Error: Please enter a name containing alphabetical characters only!");
     validationLabel.setVisible(false);
 
     nextButton.setDisable(true);
-
-    hBox.getChildren().add(0,validationLabel);
 
     textField.textProperty().addListener((observable, oldValue, newValue) -> {
       if(newValue.matches("^[a-zA-Z\\s]+$"))
