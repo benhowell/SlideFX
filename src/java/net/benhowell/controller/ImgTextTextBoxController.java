@@ -34,8 +34,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import net.benhowell.core.Display;
 import net.benhowell.core.Store;
+import net.benhowell.core.Util;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -75,13 +77,13 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
 
     this.prevButton.setOnAction(e -> {
       if(!config.hasPath("example") && getResult() != null)
-        store.addTrial(config, getResult());
+        store.addTrial(Util.ConfigToMap(config), getResult());
       triggerPrevButtonEvent();
     });
 
     this.nextButton.setOnAction(e -> {
       if(!config.hasPath("example"))
-        store.addTrial(config, getResult());
+        store.addTrial(Util.ConfigToMap(config), getResult());
       triggerNextButtonEvent();
     });
 
@@ -109,9 +111,9 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
         nextButton.requestFocus();
       }
       else { // config item is a trial
-        Config trial = store.getTrial(config.getString("id"));
+        Map<String,String> trial = store.getTrial(config.getString("id"));
         if(trial != null) {
-          textField.setText(trial.getString("result"));
+          textField.setText(trial.get("result"));
         }
         textField.setEditable(true);
         textField.requestFocus();

@@ -42,33 +42,33 @@ import java.util.Map;
  */
 public class Store {
 
-  HashMap<String, Config> trials = new HashMap<>();
-  Config details;
+  HashMap<String, Map<String,String>> trials = new HashMap<>();
+  Map<String,String> details = new HashMap<>();
   Map<String, String> languages = new HashMap<>();
 
-  public void addTrial(Config trial, String result){
-    Config newConfig = trial.withValue("result",  ConfigValueFactory.fromAnyRef(result));
+  public void addTrial(Map<String,String> trial, String result){
 
-    String txt = newConfig.getString("text").replace("${name}", newConfig.getString("name"));
+
+    String txt = trial.get("text").replace("${name}", trial.get("name"));
     System.out.println("\nStoring result");
     System.out.println("-------------------------");
-    System.out.println(" id: " + newConfig.getString("id"));
-    System.out.println(" category: " + newConfig.getString("category"));
-    System.out.println(" type: " + newConfig.getString("type"));
-    System.out.println(" image: " + newConfig.getString("image"));
-    System.out.println(" text: " + newConfig.getString("text"));
-    System.out.println(" name: " + newConfig.getString("name"));
+    System.out.println(" id: " + trial.get("id"));
+    System.out.println(" category: " + trial.get("category"));
+    System.out.println(" type: " + trial.get("type"));
+    System.out.println(" image: " + trial.get("image"));
+    System.out.println(" text: " + trial.get("text"));
+    System.out.println(" name: " + trial.get("name"));
     System.out.println(" presented text: " + txt);
     System.out.println(" result: " + result);
     System.out.println("-------------------------\n");
-    trials.put(newConfig.getString("id"), newConfig);
+    trials.put(trial.get("id"), trial);
   }
 
-  public Config getTrial(String id){
+  public Map<String,String> getTrial(String id){
     return trials.remove(id);
   }
 
-  public void addDetails(Map<String, String> detail){
+  public void setDetails(Map<String, String> detail){
     System.out.println("\nStoring details");
     System.out.println("-------------------------");
     System.out.println(" sex: " + detail.get("sex"));
@@ -77,14 +77,14 @@ public class Store {
     System.out.println(" monthsInAustralia: " + detail.get("monthsInAustralia"));
     System.out.println(" firstLanguage: " + detail.get("firstLanguage"));
     System.out.println("-------------------------\n");
-    details = ConfigValueFactory.fromMap(detail).toConfig();
+    details = detail;
   }
 
-  public Config getDetails(){
+  public Map<String, String> getDetails(){
     return details;
   }
 
-  public void addLanguages(Map<String, String> l){
+  public void setLanguages(Map<String, String> l){
     System.out.println("\nStoring result");
     System.out.println("-------------------------");
     for (Map.Entry<String, String> entry : l.entrySet()) {
@@ -122,15 +122,15 @@ public class Store {
 
       row = shDetails.createRow(1);
       cell = row.createCell(0);
-      cell.setCellValue(details.getString("sex"));
+      cell.setCellValue(details.get("sex"));
       cell = row.createCell(1);
-      cell.setCellValue(details.getString("age"));
+      cell.setCellValue(details.get("age"));
       cell = row.createCell(2);
-      cell.setCellValue(details.getString("yearsInAustralia"));
+      cell.setCellValue(details.get("yearsInAustralia"));
       cell = row.createCell(3);
-      cell.setCellValue(details.getString("monthsInAustralia"));
+      cell.setCellValue(details.get("monthsInAustralia"));
       cell = row.createCell(4);
-      cell.setCellValue(details.getString("firstLanguage"));
+      cell.setCellValue(details.get("firstLanguage"));
 
 
       int i = 1;
@@ -165,22 +165,22 @@ public class Store {
       cell.setCellValue("name");
       cell = row.createCell(6);
       cell.setCellValue("result");
-      for (Map.Entry<String, Config> e : trials.entrySet()) {
+      for (Map.Entry<String, Map<String,String>> e : trials.entrySet()) {
         row = shResults.createRow(i);
         cell = row.createCell(0);
-        cell.setCellValue(e.getValue().getString("id"));
+        cell.setCellValue(e.getValue().get("id"));
         cell = row.createCell(1);
-        cell.setCellValue(e.getValue().getString("category"));
+        cell.setCellValue(e.getValue().get("category"));
         cell = row.createCell(2);
-        cell.setCellValue(e.getValue().getString("type"));
+        cell.setCellValue(e.getValue().get("type"));
         cell = row.createCell(3);
-        cell.setCellValue(e.getValue().getString("image"));
+        cell.setCellValue(e.getValue().get("image"));
         cell = row.createCell(4);
-        cell.setCellValue(e.getValue().getString("text"));
+        cell.setCellValue(e.getValue().get("text"));
         cell = row.createCell(5);
-        cell.setCellValue(e.getValue().getString("name"));
+        cell.setCellValue(e.getValue().get("name"));
         cell = row.createCell(6);
-        cell.setCellValue(e.getValue().getString("result"));
+        cell.setCellValue(e.getValue().get("result"));
         i++;
       }
 
@@ -205,15 +205,15 @@ public class Store {
     sb.append("sex" + sep + "age" + sep + "years in Australia" + sep + "months in Australia" + sep + "first language");
     sb.append('\n');
 
-    sb.append(trials.get("detail").getString("sex"));
+    sb.append(trials.get("detail").get("sex"));
     sb.append(sep);
-    sb.append(trials.get("detail").getString("age"));
+    sb.append(trials.get("detail").get("age"));
     sb.append(sep);
-    sb.append(trials.get("detail").getString("yearsInAustralia"));
+    sb.append(trials.get("detail").get("yearsInAustralia"));
     sb.append(sep);
-    sb.append(trials.get("detail").getString("monthsInAustralia"));
+    sb.append(trials.get("detail").get("monthsInAustralia"));
     sb.append(sep);
-    sb.append(trials.get("detail").getString("firstLanguage"));
+    sb.append(trials.get("detail").get("firstLanguage"));
     sb.append('\n');
     sb.append('\n');
 
@@ -224,9 +224,9 @@ public class Store {
     trials.get("languages").entrySet()
         .stream()
         .forEach(e -> {
-          sb.append(e.getKey().toString());
+          sb.append(e.getKey());
           sb.append(sep);
-          sb.append(e.getValue().unwrapped().toString());
+          sb.append(e.getValue());
           sb.append('\n');
         });
     sb.append('\n');
@@ -239,19 +239,19 @@ public class Store {
       .stream()
       .forEach(e -> {
         if (e.getKey().startsWith("trial")) {
-          sb.append(e.getValue().getString("id"));
+          sb.append(e.getValue().get("id"));
           sb.append(sep);
-          sb.append(e.getValue().getString("category"));
+          sb.append(e.getValue().get("category"));
           sb.append(sep);
-          sb.append(e.getValue().getString("type"));
+          sb.append(e.getValue().get("type"));
           sb.append(sep);
-          sb.append(e.getValue().getString("image"));
+          sb.append(e.getValue().get("image"));
           sb.append(sep);
-          sb.append(e.getValue().getString("text"));
+          sb.append(e.getValue().get("text"));
           sb.append(sep);
-          sb.append(e.getValue().getString("name"));
+          sb.append(e.getValue().get("name"));
           sb.append(sep);
-          sb.append(e.getValue().getString("result"));
+          sb.append(e.getValue().get("result"));
           sb.append('\n');
         }
       });
