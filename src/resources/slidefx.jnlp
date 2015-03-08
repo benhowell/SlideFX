@@ -31,7 +31,7 @@
         <!-- Application Resources -->
         <j2se version="1.8+"
               href="http://java.sun.com/products/autodl/j2se"/>
-        <jar href="SlideFX.jar" main="true" />
+        <jar href="https://github.com/benhowell/SlideFX/releases/download/v0.6-beta/SlideFX.jar" main="true" />
 
     </resources>
     <application-desc
