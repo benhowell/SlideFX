@@ -29,7 +29,7 @@ import com.typesafe.config.Config;
 import java.util.*;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 19-Sep-2014.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class Util {
 

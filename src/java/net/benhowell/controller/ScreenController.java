@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class ScreenController implements Initializable {
 
@@ -153,7 +153,7 @@ public class ScreenController implements Initializable {
       n = loader.controllerLoader(this, view);
     }
     catch (IOException e) {
-      System.out.println("Controller loader failed to load view: " + e);
+      System.out.println("Controller loader failed to load view: " + view + " | " + e);
     }
     return n;
   }

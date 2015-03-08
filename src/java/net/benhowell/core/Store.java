@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 17-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class Store {
 

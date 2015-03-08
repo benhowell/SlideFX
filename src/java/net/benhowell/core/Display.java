@@ -29,7 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class Display extends StackPane{
 

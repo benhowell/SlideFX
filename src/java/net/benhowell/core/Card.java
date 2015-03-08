@@ -28,7 +28,7 @@ import com.typesafe.config.Config;
 import net.benhowell.controller.ScreenController;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class Card {
 

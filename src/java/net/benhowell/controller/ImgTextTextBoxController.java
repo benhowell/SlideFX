@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 23-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class ImgTextTextBoxController extends ScreenController implements Initializable {
 

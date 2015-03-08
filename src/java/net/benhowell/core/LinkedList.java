@@ -27,7 +27,7 @@ package net.benhowell.core;
 import java.util.Collection;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 27-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 
 

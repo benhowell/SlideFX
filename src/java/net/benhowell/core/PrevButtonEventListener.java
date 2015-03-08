@@ -25,7 +25,7 @@
 package net.benhowell.core;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 27-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public interface PrevButtonEventListener {
   void handlePrevButtonEvent(ButtonEvent event);

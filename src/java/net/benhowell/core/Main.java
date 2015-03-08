@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class Main extends Application implements PrevButtonEventListener, NextButtonEventListener {
 
@@ -138,7 +138,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     root.getChildren().addAll(display);
     primaryStage.setTitle(title);
     primaryStage.centerOnScreen();
-    primaryStage.setScene(new Scene(root, 800, 600));
+    primaryStage.setScene(new Scene(root));
     primaryStage.sizeToScene();
     //setMaximised(primaryStage)
   }

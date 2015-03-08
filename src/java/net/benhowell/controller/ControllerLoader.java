@@ -33,12 +33,12 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class ControllerLoader {
 
   public Node controllerLoader(Object controller, String resource) throws IOException{
-    URL r = getClass().getResource("../view/" + resource);
+    URL r = getClass().getResource("/net/benhowell/view/" + resource);
     if (r == null) {
       throw new IOException("Cannot load resource: " + r);
     }

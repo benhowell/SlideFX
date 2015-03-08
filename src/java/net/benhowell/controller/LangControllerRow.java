@@ -28,7 +28,7 @@ package net.benhowell.controller;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 11-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class LangControllerRow{
 

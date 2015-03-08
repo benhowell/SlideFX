@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 28-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class DetailController extends ScreenController implements Initializable {
 
@@ -93,7 +93,7 @@ public class DetailController extends ScreenController implements Initializable 
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> {
-      store.addDetails(getResult());
+      store.setDetails(getResult());
       triggerNextButtonEvent();
     });
   }
@@ -114,13 +114,13 @@ public class DetailController extends ScreenController implements Initializable 
 
   public void update(Config items) {
     super.update(() -> {
-      Config config = store.getDetails();
-      if(config != null) {
-        sexComboBox.setValue(config.getString("sex"));
-        ageComboBox.setValue(Integer.parseInt(config.getString("age")));
-        yearComboBox.setValue(Integer.parseInt(config.getString("yearsInAustralia")));
-        monthComboBox.setValue(Integer.parseInt(config.getString("monthsInAustralia")));
-        firstLanguageComboBox.setValue(config.getString("firstLanguage"));
+      Map<String, String> m = store.getDetails();
+      if(m != null) {
+        sexComboBox.setValue(m.get("sex"));
+        ageComboBox.setValue(Integer.parseInt(m.get("age")));
+        yearComboBox.setValue(Integer.parseInt(m.get("yearsInAustralia")));
+        monthComboBox.setValue(Integer.parseInt(m.get("monthsInAustralia")));
+        firstLanguageComboBox.setValue(m.get("firstLanguage"));
       }
       nextButton.requestFocus();
     });

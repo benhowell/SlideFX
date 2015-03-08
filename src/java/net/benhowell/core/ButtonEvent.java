@@ -27,7 +27,7 @@ package net.benhowell.core;
 import java.util.EventObject;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 27-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class ButtonEvent  extends EventObject {
   private static final long serialVersionUID = 1L;

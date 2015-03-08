@@ -42,7 +42,7 @@ import java.util.*;
 
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 19-Aug-2014.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class LanguageController extends ScreenController implements Initializable {
 
@@ -105,7 +105,7 @@ public class LanguageController extends ScreenController implements Initializabl
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> {
-        store.addLanguages(getResult());
+        store.setLanguages(getResult());
       triggerNextButtonEvent();
     });
   }

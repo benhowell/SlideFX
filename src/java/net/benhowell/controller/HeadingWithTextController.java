@@ -35,7 +35,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Ben Howell [ben@benhowell.net] on 22-Feb-2015.
+ * Created by Ben Howell [ben@benhowell.net]
  */
 public class HeadingWithTextController extends ScreenController implements Initializable {
 
