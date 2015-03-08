@@ -201,7 +201,6 @@ public class Store {
     StringBuilder sb = new StringBuilder();
     char sep = ';';
 
-
     sb.append("sex" + sep + "age" + sep + "years in Australia" + sep + "months in Australia" + sep + "first language");
     sb.append('\n');
 

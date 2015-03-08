@@ -156,4 +156,3 @@ public class ImgTextTextBoxController extends ScreenController implements Initia
     textField.requestFocus();
   }
 }
-
