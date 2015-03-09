@@ -115,7 +115,7 @@ public class DetailController extends ScreenController implements Initializable 
   public void update(Config items) {
     super.update(() -> {
       Map<String, String> m = store.getDetails();
-      if(m != null) {
+      if(!m.isEmpty()) {
         sexComboBox.setValue(m.get("sex"));
         ageComboBox.setValue(Integer.parseInt(m.get("age")));
         yearComboBox.setValue(Integer.parseInt(m.get("yearsInAustralia")));

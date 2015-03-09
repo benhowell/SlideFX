@@ -61,6 +61,7 @@ public class Store {
     System.out.println(" presented text: " + txt);
     System.out.println(" result: " + result);
     System.out.println("-------------------------\n");
+    trial.put("result", result);
     trials.put(trial.get("id"), trial);
   }
 
