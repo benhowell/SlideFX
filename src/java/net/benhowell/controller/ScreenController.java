@@ -114,23 +114,6 @@ public class ScreenController implements Initializable {
     Platform.runLater(() -> load());
   }
 
-
-  protected void switchStyle(Node node, String oldStyle, String newStyle){
-    removeStyle(node, oldStyle);
-    addStyle(node, newStyle);
-  }
-
-
-  protected void addStyle(Node node, String style) {
-    node.getStyleClass().add(style);
-  }
-
-
-  protected void removeStyle(Node node, String style) {
-    node.getStyleClass().remove(style);
-  }
-
-
   protected void triggerPrevButtonEvent() {
     ButtonEvent event = new ButtonEvent(this);
     prevButtonEventListeners
