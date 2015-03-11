@@ -29,6 +29,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import net.benhowell.core.Display;
 import net.benhowell.core.Store;
@@ -42,7 +43,7 @@ import java.util.stream.IntStream;
 /**
  * Created by Ben Howell [ben@benhowell.net]
  */
-public class DetailController extends ScreenController implements Initializable {
+public class DetailController extends ScreenController {
 
   @FXML private ComboBox<String> sexComboBox;
   @FXML private ComboBox<Integer> ageComboBox;
@@ -93,8 +94,10 @@ public class DetailController extends ScreenController implements Initializable 
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> {
-      store.setDetails(getResult());
-      triggerNextButtonEvent();
+      if(validateForm()) {
+        store.setDetails(getResult());
+        triggerNextButtonEvent();
+      }
     });
   }
 
@@ -128,5 +131,22 @@ public class DetailController extends ScreenController implements Initializable 
 
   public void initialize(URL url, ResourceBundle rb) {
     System.out.println(this.getClass().getSimpleName() + ".initialise");
+  }
+
+  private boolean validateForm(){
+    if(ageComboBox.getValue() < yearComboBox.getValue()) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText("Oops, something has gone wrong...");
+      alert.setContentText("" +
+          "Please ensure that your age is not less\n" +
+          "than years you've lived in Australia!");
+
+      alert.showAndWait();
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 }
