@@ -26,7 +26,6 @@ package net.benhowell.controller;
 
 import com.typesafe.config.Config;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -50,7 +49,6 @@ public class ImgTextTextBoxController extends ScreenController {
   @FXML private ImageView imageView;
   @FXML private Label label;
   @FXML private TextField textField;
-  //@FXML private BorderPane borderPane;
   @FXML private Label validationLabel;
   @FXML private HBox hBox;
 
