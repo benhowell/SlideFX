@@ -112,14 +112,13 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
   }
 
   public void endExercise(){
-    System.out.println("prompt user with save dialog...");
-
-    Instant now = Instant.now();
+    // create unique file name
+    String fileName = Instant.now().toString().replace(":","") + ".xlsx";
 
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save Survey");
     fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-    fileChooser.setInitialFileName(now.toString() + ".xlsx");
+    fileChooser.setInitialFileName(fileName);
     File file = fileChooser.showSaveDialog(stage);
     if(file != null) {
       store.generateXlsx(file);
