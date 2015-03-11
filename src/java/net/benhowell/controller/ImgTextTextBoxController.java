@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Ben Howell [ben@benhowell.net]
  */
-public class ImgTextTextBoxController extends ScreenController implements Initializable {
+public class ImgTextTextBoxController extends ScreenController {
 
   private Store store;
   private Config config;
