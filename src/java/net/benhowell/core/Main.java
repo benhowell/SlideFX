@@ -122,8 +122,9 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     File file = fileChooser.showSaveDialog(stage);
     if(file != null) {
       store.generateXlsx(file);
+      stop();
     }
-    stop();
+
   }
 
   public void stop(){
