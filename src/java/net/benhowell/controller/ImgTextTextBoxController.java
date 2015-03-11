@@ -134,25 +134,42 @@ public class ImgTextTextBoxController extends ScreenController {
 
 
   private void emptyInput(){
+    System.out.println("empty");
     nextButton.setDisable(true);
-    switchStyle(validationLabel, "validation_error", "validation_valid");
-    switchStyle(textField, "validation_error", "validation_valid");
+    validationLabel.setStyle("visibility: hidden;");
+    textField.setStyle("-fx-font-size: 30.0;");
     textField.requestFocus();
   }
 
 
   private void invalidInput(){
+    System.out.println("invalid");
     nextButton.setDisable(true);
-    switchStyle(validationLabel, "validation_valid", "validation_error");
-    switchStyle(textField, "validation_valid", "validation_error");
+
+    validationLabel.setStyle("-fx-graphic: url(\"/net/benhowell/view/icon/delete.png\");\n" +
+        "    -fx-text-fill: red;\n" +
+        "    visibility: visible;");
+
+    textField.setStyle("-fx-font-size: 30.0;\n" +
+        "-fx-background-color: red,\n" +
+        "    linear-gradient(\n" +
+        "    to bottom,\n" +
+        "    derive(red,70%) 5%,\n" +
+        "    derive(red,90%) 40%\n" +
+        "    );");
+
     textField.requestFocus();
   }
 
 
   private void validInput(){
+    System.out.println("valid");
     nextButton.setDisable(false);
-    switchStyle(validationLabel, "validation_error", "validation_valid");
-    switchStyle(textField, "validation_error", "validation_valid");
+    validationLabel.setStyle("visibility: hidden;");
+    textField.setStyle("-fx-font-size: 30.0;");
     textField.requestFocus();
   }
 }
+
+
+
