@@ -37,15 +37,13 @@ import java.util.ResourceBundle;
 /**
  * Created by Ben Howell [ben@benhowell.net]
  */
-public class HeadingWithTextController extends ScreenController implements Initializable {
+public class HeadingWithTextController extends ScreenController {
 
   @FXML private TextArea bodyTextArea;
   @FXML private Label headingLabel;
 
   public HeadingWithTextController(Object parent, Display display) {
     super(parent, "HeadingWithText.fxml", display);
-
-
 
     this.prevButton.setOnAction(e -> triggerPrevButtonEvent());
     this.nextButton.setOnAction(e -> triggerNextButtonEvent());
