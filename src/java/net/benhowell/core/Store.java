@@ -28,6 +28,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -102,7 +103,7 @@ public class Store {
 
     try {
       FileOutputStream out = new FileOutputStream(file.getAbsoluteFile());
-      SXSSFWorkbook wb = new SXSSFWorkbook(100);
+      XSSFWorkbook wb = new XSSFWorkbook();
       Sheet shDetails = wb.createSheet("Details");
       Sheet shLanguages = wb.createSheet("Languages");
       Sheet shResults = wb.createSheet("Results");
@@ -185,9 +186,6 @@ public class Store {
 
       wb.write(out);
       out.close();
-
-      // dispose of temporary files backing this workbook on disk
-      wb.dispose();
     }
     catch (IOException e){
       System.out.println("Exception: " + e);
