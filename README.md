@@ -1,4 +1,4 @@
-[SlideFX-0.6.4](releases/tag/v0.6.4-RC1)
+[SlideFX-0.6.4](https://github.com/benhowell/SlideFX/releases/tag/v0.6.4-RC1)
 ===========
 Release candidate of SlideFX, the minimalist language experiment execution client. This release contains a pre-written [example experiment (Australian Diminutives)](src/resources/application.conf).
 
@@ -11,4 +11,4 @@ Each individual trial in each block consists of a small image, a "type" (e.g. ge
 
 Obviously this little app has been created for a very specific niche, but could be useful for simple surveys or psych of language experiments in general.
 
-[Binary (all platforms) here](releases/tag/v0.6.4-RC1)
+[Binary (all platforms)](https://github.com/benhowell/SlideFX/releases/tag/v0.6.4-RC1)
