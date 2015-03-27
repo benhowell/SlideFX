@@ -1,4 +1,4 @@
-SlideFX-0.6.4
+[SlideFX-0.6.4](releases/tag/v0.6.4-RC1)
 ===========
 Release candidate of SlideFX, the minimalist language experiment execution client. This release contains a pre-written [example experiment (Australian Diminutives)](src/resources/application.conf).
 
@@ -10,3 +10,5 @@ Experiments can contain one or more trial "blocks". Each block consists of a "ca
 Each individual trial in each block consists of a small image, a "type" (e.g. general impression the image evokes, such as "good" or "bad"), "text" (question) with a random injected "name" (word), a text field for answers and a forwards and backwards button for navigation through the experiment. See the [example experiment (Australian Diminutives)](src/resources/application.conf) for further insight.
 
 Obviously this little app has been created for a very specific niche, but could be useful for simple surveys or psych of language experiments in general.
+
+[Binary (all platforms) here](releases/tag/v0.6.4-RC1)
