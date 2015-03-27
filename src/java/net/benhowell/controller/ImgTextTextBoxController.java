@@ -132,7 +132,6 @@ public class ImgTextTextBoxController extends ScreenController {
 
 
   private void emptyInput(){
-    System.out.println("empty");
     nextButton.setDisable(true);
     validationLabel.setStyle("visibility: hidden;");
     textField.setStyle("-fx-font-size: 30.0;");
@@ -141,7 +140,6 @@ public class ImgTextTextBoxController extends ScreenController {
 
 
   private void invalidInput(){
-    System.out.println("invalid");
     nextButton.setDisable(true);
 
     validationLabel.setStyle("-fx-graphic: url(\"/net/benhowell/view/icon/delete.png\");\n" +
@@ -161,7 +159,6 @@ public class ImgTextTextBoxController extends ScreenController {
 
 
   private void validInput(){
-    System.out.println("valid");
     nextButton.setDisable(false);
     validationLabel.setStyle("visibility: hidden;");
     textField.setStyle("-fx-font-size: 30.0;");
