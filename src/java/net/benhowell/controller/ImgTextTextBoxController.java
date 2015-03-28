@@ -115,7 +115,6 @@ public class ImgTextTextBoxController extends ScreenController {
 
     });
     if (config.hasPath("example")) {
-      System.out.println("example - nextButton.requestFocus()");
       super.update(() ->nextButton.requestFocus());
     }
   }
