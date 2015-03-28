@@ -52,4 +52,8 @@ public class Card {
   public void update(){
     controller.update(items);
   }
+
+  public ScreenController getController(){
+    return controller;
+  }
 }
