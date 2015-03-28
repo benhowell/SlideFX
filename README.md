@@ -1,6 +1,6 @@
-[SlideFX-0.6.4](https://github.com/benhowell/SlideFX/releases/tag/v0.6.4-RC1)
+[SlideFX-0.6.5](https://github.com/benhowell/SlideFX/releases/tag/v0.6.5)
 ===========
-Release candidate of SlideFX, the minimalist language experiment execution client. This release contains a pre-written [example experiment (Australian Diminutives)](src/resources/application.conf).
+Stable release of SlideFX, the minimalist language experiment execution client. This release contains a pre-written [example experiment (Australian Diminutives)](src/resources/application.conf).
 
 SlideFX is a simple visual experiment application for psychology of language experiments. SlideFX provides a minimal survey like application consisting of an introduction screen(s), example trial scenes, interlude screen(s), trial scenes, and outro screen(s). Interlude screens can be placed anywhere within the experiment.
 
@@ -11,4 +11,4 @@ Each individual trial in each block consists of a small image, a "type" (e.g. ge
 
 Obviously this little app has been created for a very specific niche, but could be useful for simple surveys or psych of language experiments in general.
 
-[SlideFX-0.6.4 binary (all platforms)](https://github.com/benhowell/SlideFX/releases/tag/v0.6.4-RC1)
+[SlideFX-0.6.5 binary (all platforms)](https://github.com/benhowell/SlideFX/releases/tag/v0.6.5)
