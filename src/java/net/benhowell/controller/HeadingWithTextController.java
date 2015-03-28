@@ -54,6 +54,7 @@ public class HeadingWithTextController extends ScreenController {
     headingLabel.setText(items.getString("label"));
     bodyTextArea.setText(items.getString("text"));
     super.load();
+    super.update(() -> nextButton.requestFocus());
   }
 
 
@@ -67,6 +68,5 @@ public class HeadingWithTextController extends ScreenController {
 
 
   public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
   }
 }

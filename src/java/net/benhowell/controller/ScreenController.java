@@ -142,6 +142,5 @@ public class ScreenController implements Initializable {
   }
 
   public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
   }
 }

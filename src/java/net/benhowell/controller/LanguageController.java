@@ -129,8 +129,6 @@ public class LanguageController extends ScreenController {
 
 
   public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
-
   }
 
 

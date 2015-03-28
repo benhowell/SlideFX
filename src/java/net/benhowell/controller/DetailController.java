@@ -129,7 +129,6 @@ public class DetailController extends ScreenController {
   }
 
   public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
   }
 
   private boolean validateForm(){
