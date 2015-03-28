@@ -64,14 +64,13 @@ public class ImgTextTextBoxController extends ScreenController {
     nextButton.setDisable(true);
 
     textField.textProperty().addListener((observable, oldValue, newValue) -> {
-      if(newValue.matches("^[a-zA-Z\\s]+$"))
+      if (newValue.matches("^[a-zA-Z\\s]+$"))
         validInput();
-      else if(newValue.matches("^$"))
+      else if (newValue.matches("^$"))
         emptyInput();
       else
         invalidInput();
     });
-
 
     this.prevButton.setOnAction(e -> {
       if(!config.hasPath("example") && getResult() != null)
@@ -80,11 +79,10 @@ public class ImgTextTextBoxController extends ScreenController {
     });
 
     this.nextButton.setOnAction(e -> {
-      if(!config.hasPath("example"))
+      if (!config.hasPath("example"))
         store.addTrial(Util.ConfigToMap(config), getResult());
       triggerNextButtonEvent();
     });
-
   }
 
 
@@ -103,14 +101,12 @@ public class ImgTextTextBoxController extends ScreenController {
       label.setText(txt);
       imageView.setImage(img);
 
-      if(config.hasPath("example")) { // config item is an example
+      if (config.hasPath("example")) { // config item is an example
         textField.setText(config.getString("example"));
         textField.setEditable(false);
-        nextButton.requestFocus();
-      }
-      else { // config item is a trial
-        Map<String,String> trial = store.getTrial(config.getString("id"));
-        if(trial != null) {
+      } else { // config item is a trial
+        Map<String, String> trial = store.getTrial(config.getString("id"));
+        if (trial != null) {
           textField.setText(trial.get("result"));
         }
         textField.setEditable(true);
@@ -118,16 +114,14 @@ public class ImgTextTextBoxController extends ScreenController {
       }
 
     });
+    if (config.hasPath("example")) {
+      System.out.println("example - nextButton.requestFocus()");
+      super.update(() ->nextButton.requestFocus());
+    }
   }
 
 
   public void initialize(URL url, ResourceBundle rb) {
-    System.out.println(this.getClass().getSimpleName() + ".initialise");
-  }
-
-
-  private void reset(){
-    textField.requestFocus();
   }
 
 
@@ -156,7 +150,6 @@ public class ImgTextTextBoxController extends ScreenController {
 
     textField.requestFocus();
   }
-
 
   private void validInput(){
     nextButton.setDisable(false);
