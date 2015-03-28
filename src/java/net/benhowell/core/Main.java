@@ -87,6 +87,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
 
   public void start(Stage primaryStage) {
     card.element().load();
+    card.element().getController().prevButton.setDisable(true);
     init(primaryStage, config.getString("experiment.title"));
     primaryStage.show();
   }
@@ -97,6 +98,9 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     if(card.hasPrevious()){
       card = card.previous();
       card.element().update();
+      if(!card.hasPrevious()){
+        card.element().getController().prevButton.setDisable(true);
+      }
     }
   }
 
@@ -105,6 +109,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
     if (card.hasNext()) {
       card = card.next();
       card.element().update();
+      card.element().getController().prevButton.setDisable(false);
     }
     else{
       endExercise();
