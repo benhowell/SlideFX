@@ -84,12 +84,12 @@ public class Store {
   }
 
   public void setLanguages(Map<String, String> l){
-    System.out.println("\nStoring result");
+    System.out.println("Storing result");
     System.out.println("-------------------------");
     for (Map.Entry<String, String> entry : l.entrySet()) {
       System.out.println(" " + entry.getKey() + ": " + entry.getValue());
     }
-    System.out.println("-------------------------\n");
+    System.out.println("-------------------------");
 
     languages = l;
   }
