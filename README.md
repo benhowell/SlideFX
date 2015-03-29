@@ -12,3 +12,6 @@ Each individual trial in each block consists of a small image, a "type" (e.g. ge
 Obviously this little app has been created for a very specific niche, but could be useful for simple surveys or psych of language experiments.
 
 [SlideFX-0.6.6 binary (all platforms)](https://github.com/benhowell/SlideFX/releases/tag/v0.6.6)
+
+Screenshot
+![slidefx_screenshot](https://cloud.githubusercontent.com/assets/1784519/6883597/c1bc3924-d608-11e4-9d5d-e2f25e82ac04.png)
