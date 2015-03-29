@@ -172,7 +172,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
         .stream()
         .forEach(c -> {
           String category = c.getString("category");
-          List<String> names = Util.shuffle(c.getStringList("names"));
+          List<String> terms = Util.shuffle(c.getStringList("terms"));
           ArrayList<Map<String,String>> trials = new ArrayList<>();
           Util.shuffle(c.getConfigList("trials"))
               .stream()
@@ -183,7 +183,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
                 m.put("type", trialConfig.getString("type"));
                 m.put("image", trialConfig.getString("image"));
                 m.put("text", trialConfig.getString("text"));
-                m.put("name", trialConfig.getString("name"));
+                m.put("term", trialConfig.getString("term"));
                 if (trialConfig.hasPath("example")) { // config item is an example
                   m.put("example", trialConfig.getString("example"));
                 }
@@ -191,7 +191,7 @@ public class Main extends Application implements PrevButtonEventListener, NextBu
               });
 
           for(int i=0;i<trials.size();i++){
-            trials.get(i).put("name", names.get(i));
+            trials.get(i).put("term", terms.get(i));
             trials.get(i).put("category", category);
             cards.add(new Card(ConfigFactory.parseMap(trials.get(i)), sc));
           }

@@ -47,7 +47,7 @@ public class Store {
   public void addTrial(Map<String,String> trial, String result){
 
 
-    String txt = trial.get("text").replace("${name}", trial.get("name"));
+    String txt = trial.get("text").replace("${term}", trial.get("term"));
     System.out.println("\nStoring result");
     System.out.println("-------------------------");
     System.out.println(" id: " + trial.get("id"));
@@ -55,7 +55,7 @@ public class Store {
     System.out.println(" type: " + trial.get("type"));
     System.out.println(" image: " + trial.get("image"));
     System.out.println(" text: " + trial.get("text"));
-    System.out.println(" name: " + trial.get("name"));
+    System.out.println(" term: " + trial.get("term"));
     System.out.println(" presented text: " + txt);
     System.out.println(" result: " + result);
     System.out.println("-------------------------\n");
@@ -161,7 +161,7 @@ public class Store {
       cell = row.createCell(4);
       cell.setCellValue("text");
       cell = row.createCell(5);
-      cell.setCellValue("name");
+      cell.setCellValue("term");
       cell = row.createCell(6);
       cell.setCellValue("result");
       for (Map.Entry<String, Map<String,String>> e : trials.entrySet()) {
@@ -177,7 +177,7 @@ public class Store {
         cell = row.createCell(4);
         cell.setCellValue(e.getValue().get("text"));
         cell = row.createCell(5);
-        cell.setCellValue(e.getValue().get("name"));
+        cell.setCellValue(e.getValue().get("term"));
         cell = row.createCell(6);
         cell.setCellValue(e.getValue().get("result"));
         i++;
@@ -227,7 +227,7 @@ public class Store {
     sb.append('\n');
 
 
-    sb.append("trial_id" + sep + "category" + sep + "type" + sep + "image" + sep + "text" + sep + "name" + sep + "result");
+    sb.append("trial_id" + sep + "category" + sep + "type" + sep + "image" + sep + "text" + sep + "term" + sep + "result");
     sb.append('\n');
 
     trials.entrySet()
@@ -244,7 +244,7 @@ public class Store {
           sb.append(sep);
           sb.append(e.getValue().get("text"));
           sb.append(sep);
-          sb.append(e.getValue().get("name"));
+          sb.append(e.getValue().get("term"));
           sb.append(sep);
           sb.append(e.getValue().get("result"));
           sb.append('\n');

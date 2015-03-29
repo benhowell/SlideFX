@@ -58,7 +58,7 @@ public class ImgTextTextBoxController extends ScreenController {
 
     this.store = store;
 
-    validationLabel.setText("Error: Please enter a name containing alphabetical characters only!");
+    validationLabel.setText("Error: Please enter a term containing alphabetical characters only!");
     validationLabel.setVisible(false);
 
     nextButton.setDisable(true);
@@ -93,7 +93,7 @@ public class ImgTextTextBoxController extends ScreenController {
 
   public void update(Config config) {
     this.config = config;
-    String txt = config.getString("text").replace("${name}", config.getString("name"));
+    String txt = config.getString("text").replace("${term}", config.getString("term"));
     Image img = new Image(this.getClass().getResource("/img/").toString() + config.getString("image"));
 
     super.update(() -> {
